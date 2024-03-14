@@ -274,5 +274,5 @@ License
 -------
 All Rights Reserved. Copyright 2023. Reverie Language Technologies Limited.(https://reverieinc.com/)
 
-Reverie Voice Search SDK can be used according to the [Apache License, Version 2.0](LICENSE).
+Reverie Voice Input SDK can be used according to the [Apache License, Version 2.0](LICENSE).
         
