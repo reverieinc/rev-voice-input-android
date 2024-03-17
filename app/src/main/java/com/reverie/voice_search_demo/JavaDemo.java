@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import com.rev.voice_search_demo.BuildConfig;
 import com.rev.voice_search_demo.R;
 import com.reverie.voice_input.LOG;
+import com.reverie.voice_input.RecordingActivity;
 import com.reverie.voice_input.RevVoiceInput;
 
 import com.reverie.voice_input.VoiceInputListener;
@@ -29,6 +30,7 @@ public class JavaDemo extends AppCompatActivity {
     Button searchBtn, stopBtn, searchBtnWithoutUi;
 //    RevVoiceInput voiceSearch;
     RevVoiceInput  voiceSearch;
+
     TextView outputTv;
     private static final String TAG = "JavaDemo";
 
@@ -45,10 +47,13 @@ public class JavaDemo extends AppCompatActivity {
         outputTv = findViewById(R.id.outputTv);
         searchBtnWithoutUi = findViewById(R.id.searchBtnwithoutUi);
         LOG.Companion.setDEBUG(true);// implement customlogger
-       // Log.e(TAG, "onCreate: " );
+
         voiceSearch = new RevVoiceInput(
            BuildConfig.API_KEY,
              BuildConfig.APP_ID, Domain.VOICE_SEARCH, Languages.ENGLISH, Logging.TRUE);
+        voiceSearch.setNoInputTimeout(5);
+        voiceSearch.setSilence(2);
+        voiceSearch.setTimeout(5);
         Log.d("VOICE", "onCreate: " + Domain.VOICE_SEARCH);
         Log.d("VOICE", "onCreate: " + Languages.ENGLISH);
         voiceSearch.setListener(new VoiceInputListener() {
@@ -90,9 +95,7 @@ public class JavaDemo extends AppCompatActivity {
         });
         stopBtn.setOnClickListener(view -> voiceSearch.cancel());
         searchBtnWithoutUi.setOnClickListener(view -> {
-          //  outputTv.setText("");
             voiceSearch.startRecognition(getApplicationContext(), false, Domain.VOICE_SEARCH, Languages.ENGLISH);
-
         });
     }
 }

@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_java_demo)
-//        LOG.DEBUG=false
+        LOG.DEBUG=false
 //        setContentView(R.layout.activity_java_demo)
 //        searchBtn = findViewById(R.id.searchBtn)
 //        stopBtn = findViewById(R.id.stopBtn)

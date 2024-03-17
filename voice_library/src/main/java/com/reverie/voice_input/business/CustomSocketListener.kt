@@ -19,12 +19,15 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import com.reverie.voice_input.LOG
 import com.reverie.voice_input.LOG.Companion.customLogger
+import com.reverie.voice_input.utilities.constants.Logging
 import com.reverie.voice_input.utilities.constants.REV_STT_STREAM_URL
 import okhttp3.*
 import okio.ByteString
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
+import java.util.logging.Logger
 
 
 internal class CustomSocketListener : WebSocketListener() {
@@ -33,6 +36,9 @@ internal class CustomSocketListener : WebSocketListener() {
     private var socket: WebSocket? = null
     private val handler = Handler(Looper.getMainLooper())
     private var context: Context? = null
+    private  var noInputTimeout=2
+    private var silence=1
+    private  var timeout=15
 
     interface EventCallback {
         fun onEvent(stage: Int)
@@ -82,7 +88,22 @@ internal class CustomSocketListener : WebSocketListener() {
         customLogger(TAG, "Request started")
         run(langCode, domain, apikey, appid, logging)
     }
+    fun setNoInputTimeout(noInputTimeout:Int)
+    {
+        this.noInputTimeout=noInputTimeout
 
+    }
+
+    fun setSilence(silence:Int)
+    {
+
+        this.silence=silence
+
+    }
+    fun setTimeout(timeout:Int)
+    {
+        this.timeout=timeout
+    }
     /**
      * Stop listening to audio, end the streaming cycle
      */
@@ -121,12 +142,15 @@ internal class CustomSocketListener : WebSocketListener() {
         logging: String
     ) {
         val client = OkHttpClient.Builder()
-            .readTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS).connectTimeout(10,TimeUnit.SECONDS)
             .build()
 
-        val streamUrl =
-            "${REV_STT_STREAM_URL}apikey=$apikey&appid=$appid&appname=stt_stream&src_lang=$langCode&domain=$domain&logging=$logging&debug=true&timeout=30&silence=2"
-
+        var streamUrl =
+            "${REV_STT_STREAM_URL}apikey=$apikey&appid=$appid&appname=stt_stream&src_lang=$langCode&domain=$domain&logging=$logging&timeout=$timeout&silence=$silence&no_input_timeout=$noInputTimeout"
+        if(LOG.DEBUG)
+        {
+            streamUrl += "debug=true"
+        }
         customLogger(TAG, "rev url= $streamUrl")
         val request = Request.Builder()
             .url(streamUrl)

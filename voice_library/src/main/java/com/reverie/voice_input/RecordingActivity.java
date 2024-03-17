@@ -66,8 +66,10 @@ public class RecordingActivity extends AppCompatActivity {
 
     private String logging = "";
 
+    private int silence=1;
+    private int noInputTimeout=2;
     private TextView listeningTextView;
-
+    private int timeout=15;
     @SuppressLint({"MissingInflatedId", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,10 @@ public class RecordingActivity extends AppCompatActivity {
         lang = i.getStringExtra(ConstantsKt.INTENT_LANG);
         domain = i.getStringExtra(ConstantsKt.INTENT_DOMAIN);
         logging = i.getStringExtra(ConstantsKt.INTENT_LOGGING);
+        silence=i.getIntExtra(ConstantsKt.SILENCE,1);
+        noInputTimeout=i.getIntExtra(ConstantsKt.NO_INPUT_TIMEOUT,2);
+        timeout=i.getIntExtra(ConstantsKt.TIMEOUT,15);
+
         isCancel = false;
         listeningTextView = findViewById(R.id.listening_text);
         listeningTextView.setVisibility(View.GONE);
@@ -110,6 +116,9 @@ public class RecordingActivity extends AppCompatActivity {
             slideDownCancel(relativeLayout);
         });
         streamingSTT = new StreamingSTT(getApplicationContext(), apiKey, appId);
+        streamingSTT.setSilence(silence);
+        streamingSTT.setNoInputTimeout(noInputTimeout);
+        streamingSTT.setTimeout(timeout);
         streamingSTT.setStreamingSTTResultListener(new StreamingSTTResultListener() {
             @Override
             public void onResult(VoiceInputResultData voiceInputResultData) {

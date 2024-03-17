@@ -15,7 +15,7 @@
  */
 package com.reverie.voice_input.business
 
-interface StreamingSTTResultListener {
+internal interface StreamingSTTResultListener {
 
     fun onResult(result: VoiceInputResultData?)
     fun onError(result: VoiceInputErrorResponseData)

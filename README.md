@@ -172,14 +172,29 @@ dependencies {
 4. (Optional) Abort the search process
     ```sh
          //To stop the voice searching forcefully
-       voiceInput.cancel();
+       voiceInput.cancel()
    ```
 5. (Optional) Finish the search process
     ```sh
          //To stop the voice searching forcefully and get the result
-       voiceInput.finishInput();
+       voiceInput.finishInput()
    ```
-
+6. (Optional) To Set the No Input Timeout
+    ```sh
+      voiceInput.setNoInputTimeout(5)
+   ```
+7. (Optional) To Set the the TimeOut
+    ```sh
+      voiceInput.setTimeout(5)
+    ```
+8. (Optional) To Set the Silence
+    ```sh
+      voiceInput.setSilence(2)
+    ```   
+9. (Optional) To Enable Logging
+    ```sh
+       LOG.DEBUG=false
+    ```
 ### Java based example implementation of the SDK:
 
 1. Prepare the constructor:
@@ -258,7 +273,22 @@ dependencies {
          //To stop the voice searching forcefully and get the result
        voiceInput.finishInput();
    ```
-
+6. (Optional) To Set the No Input Timeout
+    ```sh
+      voiceInput.setNoInputTimeout(5);
+   ```
+7. (Optional) To Set the the TimeOut    
+    ```sh
+      voiceInput.setTimeout(5);
+    ```
+8. (Optional) To Set the Silence
+    ```sh
+      voiceInput.setSilence(2)
+    ```
+9. (Optional) To Enable Logging(Logcat)
+    ```sh
+        LOG.Companion.setDEBUG(true);
+    ```   
 ### Necessary Permissions
 
 Following permissions are required for the SDK

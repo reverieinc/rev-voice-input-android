@@ -24,6 +24,9 @@ const val INTENT_API_KEY = "api_key"
 const val INTENT_APP_ID = "app_id"
 const val INTENT_DOMAIN = "domain"
 const val INTENT_LANG = "lang"
+const val NO_INPUT_TIMEOUT="noInputTimeout"
+const val SILENCE="silence"
+const val TIMEOUT="timeout"
 const val INTENT_LOGGING = "logging"
 //Warning messages
 const val WARNING_MISSING_MANIFEST =

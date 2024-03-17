@@ -26,6 +26,7 @@ import com.reverie.voice_input.utilities.PermissionUtils.Companion.isInternetAva
 import com.reverie.voice_input.utilities.constants.WARNING_MISSING_MANIFEST
 import com.reverie.voice_input.utilities.constants.WARNING_NO_INTERNET
 import com.reverie.voice_input.utilities.constants.WARNING_PERMISSIONS_GRANT_REQUIRED
+import okio.AsyncTimeout
 import java.io.File
 import java.util.*
 
@@ -35,7 +36,7 @@ import java.util.*
  *  @param app_id:  pass the app_id
 ````
 >**/
-class StreamingSTT(context: Context?, private var apikey: String, private var app_id: String) :
+internal class StreamingSTT(context: Context?, private var apikey: String, private var app_id: String) :
     CustomAudioRecorder.RecordingStateListener {
 
     private var mContext: Context? = context
@@ -43,6 +44,9 @@ class StreamingSTT(context: Context?, private var apikey: String, private var ap
     lateinit var streamingSTTResultListener: StreamingSTTResultListener
     private lateinit var langCode: String
     private lateinit var domain: String
+    private var noInputTimeout=2
+    private var silence=1
+    private var timeout=15
     val handler = Handler(Looper.getMainLooper())
     private var isFinal = false
 
@@ -75,7 +79,7 @@ class StreamingSTT(context: Context?, private var apikey: String, private var ap
         mFileName = Objects.requireNonNull(
             mContext!!.getExternalFilesDir(null)
         )?.absolutePath + "/RevSttRecord"
-        customLogger(TAG, "File nam e" + mFileName)
+        customLogger(TAG, "File name" + mFileName)
         val direct = File(mFileName)
         if (!direct.exists()) {
             direct.mkdir()
@@ -139,14 +143,26 @@ class StreamingSTT(context: Context?, private var apikey: String, private var ap
         customSocketListener?.addData(data)
     }
 
-    // TODO: Make a method for stop all connection, make it available for the user, add in the document
-    // TODO: make sure connection is closed properly (Internet, rotation, app kill)
-
     /**
      *  @param langCode:pass the language code of for the required
      *  @param domain:  pass the domain as per requirement
 
      */
+    fun setNoInputTimeout(noInputTimeout:Int)
+    {
+
+        this.noInputTimeout=noInputTimeout
+    }
+    fun setSilence(silence:Int)
+    {
+
+        this.silence=silence
+    }
+    fun setTimeout(timeout: Int)
+    {
+        this.timeout=timeout
+
+    }
     fun startRecognitions(langCode: String, domain: String, logging: String) {
         if (StreamingSTT.inProcess) {
             return
@@ -169,6 +185,10 @@ class StreamingSTT(context: Context?, private var apikey: String, private var ap
                         customAudioRecorder.setSpeechClient(customSocketListener)
                         StreamingSTT.inProcess = true
                         customAudioRecorder.prepare()
+                        customSocketListener!!.setSilence(silence)
+                        customSocketListener!!.setTimeout(timeout)
+                        customSocketListener!!.setNoInputTimeout(noInputTimeout)
+
                         //customSocketListener!!.startRequest(langCode, domain, apikey, app_id)
                         customSocketListener!!.startRequest(
                             langCode,

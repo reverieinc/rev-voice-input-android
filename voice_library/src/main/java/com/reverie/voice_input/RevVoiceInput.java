@@ -43,6 +43,15 @@ public class RevVoiceInput {
 
     private RecordingWithoutUi recordingWithoutUi;
 
+
+
+    private int noInputTimeout=2;
+    private int silence=1;
+
+    private int timeout=15;
+
+
+
     /**
      * Constructor call for VoiceSearch where first parameter is the api_key and the second parameter is app_id
      *
@@ -57,6 +66,29 @@ public class RevVoiceInput {
         this.logging = logging;
     }
 
+    /**
+     * Set the parameter for noInputTimeout
+     * @param noInputTimeout int value of noInputTimeout
+     */
+    public void setNoInputTimeout(int noInputTimeout) {
+        this.noInputTimeout = noInputTimeout;
+    }
+/**
+ * Set the parameter for silence
+ * @param silence int value of silence
+* */
+    public void setSilence(int silence) {
+        this.silence = silence;
+    }
+    /**
+     * Set the parameter for silence
+     * @param timeout int value of silence
+     * */
+    public void setTimeout(int timeout)
+    {
+        this.timeout=timeout;
+
+    }
     /**
      * Constructor call for VoiceSearch where first parameter is the api_key , second parameter is app_id ,third parameter is domain , fourth parameter is the language
      *
@@ -111,11 +143,14 @@ public class RevVoiceInput {
                     putExtra(ConstantsKt.INTENT_API_KEY, apiKey).
                     putExtra(ConstantsKt.INTENT_APP_ID, appId).
                     putExtra(ConstantsKt.INTENT_DOMAIN, domain).
+                    putExtra(ConstantsKt.NO_INPUT_TIMEOUT,noInputTimeout).
+                    putExtra(ConstantsKt.SILENCE,silence).
                     putExtra(ConstantsKt.INTENT_LANG, lang).
+                    putExtra(ConstantsKt.TIMEOUT,timeout).
                     putExtra(ConstantsKt.INTENT_LOGGING, logging).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
         } else {
-            recordingWithoutUi = new RecordingWithoutUi(context, apiKey, appId, domain, lang, logging);
+            recordingWithoutUi = new RecordingWithoutUi(context, apiKey, appId, domain, lang, logging,noInputTimeout,silence,timeout);
             recordingWithoutUi.startRecognitions();
         }
     }
@@ -156,10 +191,14 @@ public class RevVoiceInput {
                     putExtra(ConstantsKt.INTENT_APP_ID, appId).
                     putExtra(ConstantsKt.INTENT_DOMAIN, domain).
                     putExtra(ConstantsKt.INTENT_LANG, lang).
+                    putExtra(ConstantsKt.SILENCE,silence).
+                    putExtra(ConstantsKt.TIMEOUT,timeout).
+                    putExtra(ConstantsKt.NO_INPUT_TIMEOUT,noInputTimeout).
+                    putExtra(ConstantsKt.TIMEOUT,timeout).
                     putExtra(ConstantsKt.INTENT_LOGGING, logging).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
         } else {
-            recordingWithoutUi = new RecordingWithoutUi(context, apiKey, appId, domain, lang, logging);
+            recordingWithoutUi = new RecordingWithoutUi(context, apiKey, appId, domain, lang, logging,noInputTimeout,silence,timeout);
             recordingWithoutUi.startRecognitions();
         }
     }
