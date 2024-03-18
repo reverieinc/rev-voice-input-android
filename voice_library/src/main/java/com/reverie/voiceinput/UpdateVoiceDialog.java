@@ -13,36 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reverie.voice_input;
+package com.reverie.voiceinput;
 
-import com.reverie.voice_input.business.VoiceInputErrorResponseData;
-import com.reverie.voice_input.business.VoiceInputResultData;
+interface UpdateVoiceDialog {
+    void stopRecognizing();
 
-/**
- * Interface to implement the callbacks of the Voice SDK
- */
-public interface VoiceInputListener {
-
-
-    /**
-     * Callback to get the Result
-     */
-
-    public void onResult(VoiceInputResultData result);
-
-    /**
-     * Callback to get the Error
-     */
-    public void onError(VoiceInputErrorResponseData error);
-
-    /**
-     *
-     */
-    public void onRecordingStart(boolean isStart);
-
-    /**
-     *
-     */
-    public void onRecordingEnd(boolean isEnd);
+    void setBackgroundColor(int color);
 
 }

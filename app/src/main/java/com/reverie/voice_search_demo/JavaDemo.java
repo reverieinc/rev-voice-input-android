@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -12,24 +11,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.rev.voice_search_demo.BuildConfig;
-import com.rev.voice_search_demo.R;
-import com.reverie.voice_input.LOG;
-import com.reverie.voice_input.RecordingActivity;
-import com.reverie.voice_input.RevVoiceInput;
-
-import com.reverie.voice_input.VoiceInputListener;
-import com.reverie.voice_input.business.VoiceInputErrorResponseData;
-import com.reverie.voice_input.business.VoiceInputResultData;
-import com.reverie.voice_input.utilities.constants.Domain;
-import com.reverie.voice_input.utilities.constants.Languages;
-import com.reverie.voice_input.utilities.constants.Logging;
+import com.rev.voice_input_demo.BuildConfig;
+import com.rev.voice_input_demo.R;
+import com.reverie.voiceinput.LOG;
+import com.reverie.voiceinput.RevVoiceInput;
+import com.reverie.voiceinput.VoiceInputListener;
+import com.reverie.voiceinput.business.VoiceInputErrorResponseData;
+import com.reverie.voiceinput.business.VoiceInputResultData;
+import com.reverie.voiceinput.utilities.constants.Domain;
+import com.reverie.voiceinput.utilities.constants.Languages;
+import com.reverie.voiceinput.utilities.constants.Logging;
 
 
 public class JavaDemo extends AppCompatActivity {
     Button searchBtn, stopBtn, searchBtnWithoutUi;
-//    RevVoiceInput voiceSearch;
-    RevVoiceInput  voiceSearch;
+    //    RevVoiceInput voiceSearch;
+    RevVoiceInput voiceInput;
 
     TextView outputTv;
     private static final String TAG = "JavaDemo";
@@ -46,17 +43,18 @@ public class JavaDemo extends AppCompatActivity {
         stopBtn = findViewById(R.id.stopBtn);
         outputTv = findViewById(R.id.outputTv);
         searchBtnWithoutUi = findViewById(R.id.searchBtnwithoutUi);
-        LOG.Companion.setDEBUG(true);// implement customlogger
+        LOG.Companion.setDEBUG(false);// implement customlogger
 
-        voiceSearch = new RevVoiceInput(
-           BuildConfig.API_KEY,
-             BuildConfig.APP_ID, Domain.VOICE_SEARCH, Languages.ENGLISH, Logging.TRUE);
-        voiceSearch.setNoInputTimeout(5);
-        voiceSearch.setSilence(2);
-        voiceSearch.setTimeout(5);
+        voiceInput = new RevVoiceInput(
+                BuildConfig.API_KEY,
+                BuildConfig.APP_ID, Domain.VOICE_SEARCH, Languages.ENGLISH, Logging.TRUE);
+        voiceInput.setNoInputTimeout(5);
+        voiceInput.setSilence(2);
+        voiceInput.setTimeout(5);
         Log.d("VOICE", "onCreate: " + Domain.VOICE_SEARCH);
         Log.d("VOICE", "onCreate: " + Languages.ENGLISH);
-        voiceSearch.setListener(new VoiceInputListener() {
+        Log.d("VOICE", "BuildConfig.APP_ID: " + BuildConfig.APP_ID);
+        voiceInput.setListener(new VoiceInputListener() {
             @Override
             public void onResult(VoiceInputResultData result) {
                 Log.d(TAG, "onResult: " + result);
@@ -65,7 +63,8 @@ public class JavaDemo extends AppCompatActivity {
 
             @Override
             public void onError(VoiceInputErrorResponseData error) {
-             //   outputTv.setText(error.toString() + error.getCode());
+                //   outputTv.setText(error.toString() + error.getCode());
+                Log.e(TAG, "onError full: "+error.toString());
 
             }
 
@@ -86,16 +85,16 @@ public class JavaDemo extends AppCompatActivity {
             outputTv.setText("");
 
 
-            voiceSearch.startRecognition(
+            voiceInput.startRecognition(
                     getApplicationContext(),
                     true
             );
 
 
         });
-        stopBtn.setOnClickListener(view -> voiceSearch.cancel());
+        stopBtn.setOnClickListener(view -> voiceInput.cancel());
         searchBtnWithoutUi.setOnClickListener(view -> {
-            voiceSearch.startRecognition(getApplicationContext(), false, Domain.VOICE_SEARCH, Languages.ENGLISH);
+            voiceInput.startRecognition(getApplicationContext(), false, Domain.VOICE_SEARCH, Languages.ENGLISH);
         });
     }
 }

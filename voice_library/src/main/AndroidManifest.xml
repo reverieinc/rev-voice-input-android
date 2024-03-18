@@ -8,7 +8,7 @@
     <application>
 
         <activity
-            android:name="com.reverie.voice_input.RecordingActivity"
+            android:name="com.reverie.voiceinput.RecordingActivity"
             android:exported="true"
             android:theme="@style/DialogTheme"
             android:configChanges="orientation|screenSize|keyboardHidden"

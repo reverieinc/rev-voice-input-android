@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "VoiceSearchSdkDemo"
+rootProject.name = "RevVoiceInput"
 include ':app'
 
 

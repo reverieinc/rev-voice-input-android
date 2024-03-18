@@ -193,7 +193,9 @@ dependencies {
     ```   
 9. (Optional) To Enable Logging
     ```sh
-       LOG.DEBUG=false
+      import com.reverie.voiceinput.LOG;
+   
+       LOG.DEBUG=true
     ```
 ### Java based example implementation of the SDK:
 
@@ -287,6 +289,8 @@ dependencies {
     ```
 9. (Optional) To Enable Logging(Logcat)
     ```sh
+        import com.reverie.voiceinput.LOG;
+      
         LOG.Companion.setDEBUG(true);
     ```   
 ### Necessary Permissions

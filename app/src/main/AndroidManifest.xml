@@ -33,7 +33,7 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.reverie.voice_search_demo.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

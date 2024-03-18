@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reverie.voice_input.business
+package com.reverie.voiceinput.business
 
 import android.annotation.SuppressLint
 
@@ -26,7 +26,7 @@ import android.media.audiofx.NoiseSuppressor
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.reverie.voice_input.LOG.Companion.customLogger
+import com.reverie.voiceinput.LOG.Companion.customLogger
 
 
 import java.io.File

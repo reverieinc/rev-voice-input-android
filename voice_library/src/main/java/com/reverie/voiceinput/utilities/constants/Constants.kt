@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reverie.voice_input.utilities.constants
+package com.reverie.voiceinput.utilities.constants
 
 
 const val REV_STT_STREAM_URL = "wss://revapi.reverieinc.com/stream?"

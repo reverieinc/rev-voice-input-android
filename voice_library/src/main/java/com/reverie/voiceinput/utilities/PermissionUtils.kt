@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reverie.voice_input.utilities
+package com.reverie.voiceinput.utilities
 
 import android.Manifest
 import android.content.Context
@@ -22,7 +22,7 @@ import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import com.reverie.voice_input.LOG.Companion.customLogger
+import com.reverie.voiceinput.LOG.Companion.customLogger
 
 /**
  * Class to verify the permission access given in the application

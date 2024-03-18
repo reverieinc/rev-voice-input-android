@@ -1,4 +1,4 @@
-package com.reverie.voice_input;
+package com.reverie.voiceinput;
 
 
 

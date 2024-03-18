@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.rev.voice_input'
+    namespace 'com.reverie.voiceinput'
     compileSdk 33
 
     defaultConfig {
@@ -19,7 +19,11 @@ android {
 
         project.archivesBaseName = "reverie-voice-input"
         project.version = android.defaultConfig.versionName
-        setProperty("archivesBaseName", "${archivesBaseName}_v$version")
+        setProperty("archivesBaseName", "${archivesBaseName}-v$version")
+
+        aarMetadata {
+            minCompileSdk = 21
+        }
     }
 
     buildTypes {
@@ -33,7 +37,20 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.reverie.voiceinput'
+            artifactId = 'reverie-voice-input'
+            version = '1.0.1'
 
+            afterEvaluate {
+                from components.release
+            }
+
+        }
+    }
+}
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.5.1'

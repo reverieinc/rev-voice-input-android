@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.reverie.voice_input;
+package com.reverie.voiceinput;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -32,13 +32,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import com.rev.voice_input.R;
-import com.reverie.voice_input.business.StreamingSTT;
-import com.reverie.voice_input.business.VoiceInputErrorResponseData;
-import com.reverie.voice_input.business.VoiceInputResultData;
-import com.reverie.voice_input.business.StreamingSTTResultListener;
-import com.reverie.voice_input.utilities.constants.ConstantsKt;
+import com.reverie.voiceinput.business.StreamingSTT;
+import com.reverie.voiceinput.business.StreamingSTTResultListener;
+import com.reverie.voiceinput.business.VoiceInputErrorResponseData;
+import com.reverie.voiceinput.business.VoiceInputResultData;
+import com.reverie.voiceinput.utilities.constants.ConstantsKt;
 
 /**
  * Recording Activity of the dialog of the UI
@@ -66,10 +64,11 @@ public class RecordingActivity extends AppCompatActivity {
 
     private String logging = "";
 
-    private int silence=1;
-    private int noInputTimeout=2;
+    private int silence = 1;
+    private int noInputTimeout = 2;
     private TextView listeningTextView;
-    private int timeout=15;
+    private int timeout = 15;
+
     @SuppressLint({"MissingInflatedId", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +81,9 @@ public class RecordingActivity extends AppCompatActivity {
         lang = i.getStringExtra(ConstantsKt.INTENT_LANG);
         domain = i.getStringExtra(ConstantsKt.INTENT_DOMAIN);
         logging = i.getStringExtra(ConstantsKt.INTENT_LOGGING);
-        silence=i.getIntExtra(ConstantsKt.SILENCE,1);
-        noInputTimeout=i.getIntExtra(ConstantsKt.NO_INPUT_TIMEOUT,2);
-        timeout=i.getIntExtra(ConstantsKt.TIMEOUT,15);
+        silence = i.getIntExtra(ConstantsKt.SILENCE, 1);
+        noInputTimeout = i.getIntExtra(ConstantsKt.NO_INPUT_TIMEOUT, 2);
+        timeout = i.getIntExtra(ConstantsKt.TIMEOUT, 15);
 
         isCancel = false;
         listeningTextView = findViewById(R.id.listening_text);
@@ -141,7 +140,7 @@ public class RecordingActivity extends AppCompatActivity {
                 RevVoiceInput.listener.onError(voiceInputErrorResponseData);
                 //outputTv.setText(voiceInputErrorResponseData.getError());
                 listeningTextView.setVisibility(View.GONE);
-                 slideDownCancel(relativeLayout);
+                slideDownCancel(relativeLayout);
             }
 
             @Override

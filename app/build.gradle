@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.rev.voice_search_demo'
+    namespace 'com.rev.voice_input_demo'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.rev.voice_search_demo"
+        applicationId "com.rev.voice_input_demo"
         minSdk 21
         targetSdk 33
         versionCode 1

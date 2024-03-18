@@ -29,6 +29,6 @@
     public protected *;
 }
 
--keepclassmembers class com.reverie.voice_input.** {
+-keepclassmembers class com.reverie.voiceinput.** {
    public *;
 }

@@ -2,17 +2,11 @@ package com.reverie.voice_search_demo
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.rev.voice_search_demo.BuildConfig
-import com.rev.voice_search_demo.R
-import com.reverie.voice_input.LOG
-import com.reverie.voice_input.utilities.constants.Domain
-import com.reverie.voice_input.utilities.constants.Languages
-import com.reverie.voice_input.utilities.constants.Logging
-
+import com.rev.voice_input_demo.R
+import com.reverie.voiceinput.LOG
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_java_demo)
-        LOG.DEBUG=false
+        LOG.DEBUG = false
 //        setContentView(R.layout.activity_java_demo)
 //        searchBtn = findViewById(R.id.searchBtn)
 //        stopBtn = findViewById(R.id.stopBtn)

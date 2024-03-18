@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reverie.voice_input;
+package com.reverie.voiceinput;
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.reverie.voice_input.utilities.constants.ConstantsKt;
-import com.reverie.voice_input.utilities.constants.Domain;
-import com.reverie.voice_input.utilities.constants.Languages;
+import com.reverie.voiceinput.utilities.constants.ConstantsKt;
+import com.reverie.voiceinput.utilities.constants.Domain;
+import com.reverie.voiceinput.utilities.constants.Languages;
 
 
 /**

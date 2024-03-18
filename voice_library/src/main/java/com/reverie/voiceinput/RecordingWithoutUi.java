@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.reverie.voice_input;
+package com.reverie.voiceinput;
 
 import android.content.Context;
 
 
 import androidx.annotation.NonNull;
 
-import com.reverie.voice_input.business.StreamingSTT;
-import com.reverie.voice_input.business.VoiceInputErrorResponseData;
-import com.reverie.voice_input.business.VoiceInputResultData;
-import com.reverie.voice_input.business.StreamingSTTResultListener;
+import com.reverie.voiceinput.business.StreamingSTT;
+import com.reverie.voiceinput.business.VoiceInputErrorResponseData;
+import com.reverie.voiceinput.business.VoiceInputResultData;
+import com.reverie.voiceinput.business.StreamingSTTResultListener;
 
 
 /**

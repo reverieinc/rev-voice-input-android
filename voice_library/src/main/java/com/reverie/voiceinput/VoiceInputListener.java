@@ -13,20 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reverie.voice_input.business
+package com.reverie.voiceinput;
 
-internal interface StreamingSTTResultListener {
+import com.reverie.voiceinput.business.VoiceInputErrorResponseData;
+import com.reverie.voiceinput.business.VoiceInputResultData;
 
-    fun onResult(result: VoiceInputResultData?)
-    fun onError(result: VoiceInputErrorResponseData)
+/**
+ * Interface to implement the callbacks of the Voice SDK
+ */
+public interface VoiceInputListener {
 
-    fun onConnectionSuccess(result: String)
 
-    fun onRecordingStart(isTrue: Boolean)
+    /**
+     * Callback to get the Result
+     */
 
-    fun onRecordingEnd(isTrue: Boolean)
+    public void onResult(VoiceInputResultData result);
 
-    fun onRecordingData(data: ByteArray, amplitude: Int)
+    /**
+     * Callback to get the Error
+     */
+    public void onError(VoiceInputErrorResponseData error);
 
+    /**
+     *
+     */
+    public void onRecordingStart(boolean isStart);
+
+    /**
+     *
+     */
+    public void onRecordingEnd(boolean isEnd);
 
 }

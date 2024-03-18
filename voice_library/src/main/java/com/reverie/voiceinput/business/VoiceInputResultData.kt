@@ -13,11 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reverie.voice_input;
+package com.reverie.voiceinput.business
 
-interface UpdateVoiceDialog {
-    void stopRecognizing();
+data class VoiceInputResultData(
+    val id: String,
+    val success: Boolean,
+    val final: Boolean,
+    val text: String,
+    val cause: String,
+    val confidence: Double,
+    val displayText: String
+)
 
-    void setBackgroundColor(int color);
 
-}
+data class VoiceInputErrorResponseData(val error: String, val code: Int)

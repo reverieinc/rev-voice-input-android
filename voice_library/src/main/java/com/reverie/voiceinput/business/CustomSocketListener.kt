@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reverie.voice_input.business
+package com.reverie.voiceinput.business
 
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.reverie.voice_input.LOG
-import com.reverie.voice_input.LOG.Companion.customLogger
-import com.reverie.voice_input.utilities.constants.Logging
-import com.reverie.voice_input.utilities.constants.REV_STT_STREAM_URL
+import com.reverie.voiceinput.LOG
+import com.reverie.voiceinput.LOG.Companion.customLogger
+import com.reverie.voiceinput.utilities.constants.REV_STT_STREAM_URL
 import okhttp3.*
 import okio.ByteString
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
-import java.util.logging.Logger
 
 
 internal class CustomSocketListener : WebSocketListener() {

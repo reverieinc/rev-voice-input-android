@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reverie.voice_input.business
+package com.reverie.voiceinput.business
 
 import android.Manifest
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import com.reverie.voice_input.LOG.Companion.customLogger
-import com.reverie.voice_input.utilities.PermissionUtils.Companion.checkManifestPermissions
-import com.reverie.voice_input.utilities.PermissionUtils.Companion.checkPermissionsAudio
-import com.reverie.voice_input.utilities.PermissionUtils.Companion.isInternetAvailable
-import com.reverie.voice_input.utilities.constants.WARNING_MISSING_MANIFEST
-import com.reverie.voice_input.utilities.constants.WARNING_NO_INTERNET
-import com.reverie.voice_input.utilities.constants.WARNING_PERMISSIONS_GRANT_REQUIRED
-import okio.AsyncTimeout
+import com.reverie.voiceinput.LOG.Companion.customLogger
+import com.reverie.voiceinput.utilities.PermissionUtils.Companion.checkManifestPermissions
+import com.reverie.voiceinput.utilities.PermissionUtils.Companion.checkPermissionsAudio
+import com.reverie.voiceinput.utilities.PermissionUtils.Companion.isInternetAvailable
+import com.reverie.voiceinput.utilities.constants.WARNING_MISSING_MANIFEST
+import com.reverie.voiceinput.utilities.constants.WARNING_NO_INTERNET
+import com.reverie.voiceinput.utilities.constants.WARNING_PERMISSIONS_GRANT_REQUIRED
 import java.io.File
 import java.util.*
 
