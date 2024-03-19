@@ -1,5 +1,6 @@
 # Reverie Voice Input SDK
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![](https://jitpack.io/v/reverieinc/rev-voice-input-android.svg)](https://jitpack.io/#reverieinc/rev-voice-input-android)
 
 This SDK helps in accurately converting speech into text using an API powered by Reverie's AI
