@@ -64,7 +64,7 @@ There are two **startRecognitions()** methods in the **RevVoiceInput** class. Th
 | Element    | Type    | Required | Default        | Description                 |
 |------------|---------|----------|----------------|-----------------------------|
 | Context    | context | true     | -              | Context of the activity     |
-| isUiNeeded | boolean | true     | -              | Is Ui needed in client side |
+| isUiNeeded | boolean | true     | -              | to use bundled UI element of the SDK |
 
 
 
@@ -99,7 +99,7 @@ Gradle:
 
 ##### **Groovy:**
 
-Add the jitpack.io repository to `settings.gradle` file:
+Add the `jitpack.io` repository to `settings.gradle` file:
 ```groovy
 dependencyResolutionManagement {
 		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -117,7 +117,7 @@ dependencies {
 ```
 
 ##### **Kotlin DSL:**
-Add the jitpack.io repository to `settings.gradle` file:
+Add the `jitpack.io` repository to `settings.gradle` file:
 ```
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -167,10 +167,8 @@ The following permissions are required for the SDK:
 
 1. Prepare the constructor:
 
-     ```sh
-    //Preparing the constructor with valid API key and APP-ID
-          val voiceInput = RevVoiceInput(API_KEY, APP_ID,Logging.TRUE)
-    ```
+   **Type I:**
+   
     ```sh
     //Preparing the Constructor with  API-key , APP-ID , language,domain and logging
         val  voiceInput=RevVoiceInput(API_KEY,APP_ID,
@@ -178,9 +176,16 @@ The following permissions are required for the SDK:
         Languages.ENGLISH,
         Logging.TRUE)
     ```
+	**Type II:**
+
+     ```sh
+    //Preparing the constructor with valid API key and APP-ID
+          val voiceInput = RevVoiceInput(API_KEY, APP_ID,Logging.TRUE)
+    ```
+	> For more details about the types check: [API Reference](#api-reference)
 
 
-2. Implement the listener:
+3. Implement the listener:
     ```sh
     //Implement the listener to get results and error details
          voiceInput.setListener(object : VoiceInputListener {
@@ -202,14 +207,10 @@ The following permissions are required for the SDK:
         })
     ```
 
-3. Starting the Input process:
-    ```sh
-   //To start the voice search
-          voiceInput.startRecognition(
-              applicationContext,
-              true 
-          )
-    ```
+5. Starting the Input process:
+
+   **Type I:**
+   
     ```sh
         voiceInput.startRecognition(
                     getApplicationContext(),
@@ -218,30 +219,39 @@ The following permissions are required for the SDK:
                      Languages.ENGLISH
             )
     ```
+    **Type II:**
+    ```sh
+   //To start the voice search
+          voiceInput.startRecognition(
+              applicationContext,
+              true 
+          )
+    ```
+	> For more details about the types check: [API Reference](#api-reference)
 
-4. (Optional) Abort the search process
+7. (Optional) Abort the search process
     ```sh
          //To stop the voice searching forcefully
        voiceInput.cancel()
    ```
-5. (Optional) Finish the search process
+8. (Optional) Finish the search process
     ```sh
          //To stop the voice searching forcefully and get the result
        voiceInput.finishInput()
    ```
-6. (Optional) To Set the No Input Timeout
+9. (Optional) To Set the No Input Timeout
     ```sh
       voiceInput.setNoInputTimeout(5)
    ```
-7. (Optional) To Set the the TimeOut
+10. (Optional) To Set the the TimeOut
     ```sh
       voiceInput.setTimeout(5)
     ```
-8. (Optional) To Set the Silence
+11. (Optional) To Set the Silence
     ```sh
       voiceInput.setSilence(2)
     ```   
-9. (Optional) To Enable Logging
+12. (Optional) To Enable Logging
     ```sh
       import com.reverie.voiceinput.LOG;
    
@@ -250,12 +260,9 @@ The following permissions are required for the SDK:
 ### Java based example implementation of the SDK:
 
 1. Prepare the constructor:
-     ```sh
-        //Preparing the constructor with valid API key and APP-ID
-        RevVoiceInput voiceInput = new RevVoiceInput(API_KEY, APP_ID,Logging.TRUE);
-              
-    ```
 
+	**Type I:**
+   
    ```sh 
    //Preparing the Constructor with valid API-key , APP-ID , language , domain and Logging
    
@@ -266,7 +273,16 @@ The following permissions are required for the SDK:
 
    
     ```
-2. Implement the listeners:
+   **Type II:**
+     ```sh
+        //Preparing the constructor with valid API key and APP-ID
+        RevVoiceInput voiceInput = new RevVoiceInput(API_KEY, APP_ID,Logging.TRUE);
+              
+    ```
+
+   > For more details about the types check: [API Reference](#api-reference)
+
+3. Implement the listeners:
     ```sh
           //Implement the listener to get results and error details
        voiceInput.setListener(new VoiceInputListener() {
@@ -297,16 +313,10 @@ The following permissions are required for the SDK:
         });
     ```  
 
-3. Starting the search Process.
-    ```sh
-    //To Start the Voice Input
-          voiceInput.startRecognition(
-              getApplicationContext(),//Context
-              true//isUiNeeded
-          );
-          
-    ```
-   ```sh
+4. Starting the search Process.
+
+   **Type I:**
+      ```sh
 
     voiceInput.startRecognition(
     getApplicationContext(),
@@ -315,29 +325,42 @@ The following permissions are required for the SDK:
     Languages.ENGLISH 
     )
     ```
-4. (Optional) Abort the search process
+      **Type II:**
+   
+    ```sh
+    //To Start the Voice Input
+          voiceInput.startRecognition(
+              getApplicationContext(),//Context
+              true//isUiNeeded
+          );
+          
+    ```
+
+   > For more details about the types check: [API Reference](#api-reference)
+
+6. (Optional) Abort the search process
     ```sh
          //To stop the voice searching forcefully
        voiceInput.cancel();
    ```
-5. (Optional) Finish the search process
+7. (Optional) Finish the search process
     ```sh
          //To stop the voice searching forcefully and get the result
        voiceInput.finishInput();
    ```
-6. (Optional) To Set the No Input Timeout
+8. (Optional) To Set the No Input Timeout
     ```sh
       voiceInput.setNoInputTimeout(5);
    ```
-7. (Optional) To Set the the TimeOut    
+9. (Optional) To Set the the TimeOut    
     ```sh
       voiceInput.setTimeout(5);
     ```
-8. (Optional) To Set the Silence
+10. (Optional) To Set the Silence
     ```sh
       voiceInput.setSilence(2)
     ```
-9. (Optional) To Enable Logging(Logcat)
+11. (Optional) To Enable Logging(Logcat)
     ```sh
         import com.reverie.voiceinput.LOG;
       
