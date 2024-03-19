@@ -1,5 +1,7 @@
 # Reverie Voice Input SDK
 
+[![](https://jitpack.io/v/reverieinc/rev-voice-input-android.svg)](https://jitpack.io/#reverieinc/rev-voice-input-android)
+
 This SDK helps in accurately converting speech into text using an API powered by Reverie's AI
 technology. The solution will transcribe the speech in real-time in various Indian languages and
 audio formats.
@@ -88,20 +90,68 @@ Various constant values are provided in SDK for DOMAIN, LANGUAGES, and LOGGING p
 
 
 ## Integrate the SDK in Your Application
+[![](https://jitpack.io/v/reverieinc/rev-voice-input-android.svg)](https://jitpack.io/#reverieinc/rev-voice-input-android)
+
 
 To integrate the SDK into your application, follow these steps:
-Min Supported Android SDK-21
-1. Place the library AAR file in the `libs` folder.
-2. Add the following dependency in the app-level `build.gradle` file:
 
+Gradle:
+
+##### **Groovy:**
+
+Add the jitpack.io repository to `settings.gradle` file:
+```groovy
+dependencyResolutionManagement {
+		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		repositories {
+			mavenCentral()
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+and add the following to the app-level dependencies:
 ```
 dependencies {
-    implementation files('libs/reverie-voice-input_v1.0.aar')
-    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+	  implementation 'com.github.reverieinc:rev-voice-input-android:1.0.2'
 }
 ```
 
+##### **Kotlin DSL:**
+Add the jitpack.io repository to `settings.gradle` file:
+```
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
+}
+```
+and add the following to the app-level dependencies:
+```
+dependencies {
+	  implementation ("com.github.reverieinc:rev-voice-input-android:1.0.2")
+}
+
+```
+
+
 > Note: Verify that the correct file name is added as a dependency.
+>
+> Min Supported Android SDK-21
+
+
+### Necessary Permissions
+
+The following permissions are required for the SDK:
+
+```sh
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission  android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+```
+
+
 
 ## SDK usage example:
 - [Kotlin based](#kotlin-based-example-implementation-of-the-sdk)
@@ -202,17 +252,17 @@ dependencies {
 1. Prepare the constructor:
      ```sh
         //Preparing the constructor with valid API key and APP-ID
-        RevVoiceSearch voiceInput = new RevVoiceInput(API_KEY, APP_ID,Logging.TRUE);
+        RevVoiceInput voiceInput = new RevVoiceInput(API_KEY, APP_ID,Logging.TRUE);
               
     ```
 
    ```sh 
    //Preparing the Constructor with valid API-key , APP-ID , language , domain and Logging
    
-    RevVoiceInput voiceInput=RevVoiceInput(API_KEY,APP_ID,
-    Domain.VOICE_SEARCH,
-    Languages.ENGLISH, 
-    Logging.TRUE)
+    RevVoiceInput voiceInput = = new RevVoiceInput(
+                API_KEY,
+                APP_ID,
+                Domain.VOICE_SEARCH, Languages.ENGLISH, Logging.TRUE);
 
    
     ```
@@ -293,16 +343,6 @@ dependencies {
       
         LOG.Companion.setDEBUG(true);
     ```   
-### Necessary Permissions
-
-Following permissions are required for the SDK
-
-```sh
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission  android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-```
-
 
 License
 -------
