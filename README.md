@@ -4,7 +4,7 @@
 [![](https://jitpack.io/v/reverieinc/rev-voice-input-android.svg)](https://jitpack.io/#reverieinc/rev-voice-input-android)
 
 This SDK helps in accurately converting speech into text using an API powered by Reverie's AI
-technology. The solution will transcribe the speech in real-time in various Indian languages and
+technology. The solution will transcribe the speech in real time in various Indian languages and
 audio formats.
 
 ## Key Features
@@ -171,7 +171,7 @@ The following permissions are required for the SDK:
    **Type I:**
    
     ```sh
-    //Preparing the Constructor with  API-key , APP-ID , language,domain and logging
+    //Preparing the Constructor with  API-key, APP-ID, language, domain, and logging
         val  voiceInput=RevVoiceInput(API_KEY,APP_ID,
         Domain.VOICE_SEARCH, 
         Languages.ENGLISH,
@@ -180,7 +180,7 @@ The following permissions are required for the SDK:
 	**Type II:**
 
      ```sh
-    //Preparing the constructor with valid API key and APP-ID
+    //Preparing the constructor with a valid API key and APP-ID
           val voiceInput = RevVoiceInput(API_KEY, APP_ID,Logging.TRUE)
     ```
 	> For more details about the types check: [API Reference](#api-reference)
@@ -244,7 +244,7 @@ The following permissions are required for the SDK:
     ```sh
       voiceInput.setNoInputTimeout(5)
    ```
-10. (Optional) To Set the the TimeOut
+10. (Optional) To Set the TimeOut
     ```sh
       voiceInput.setTimeout(5)
     ```
@@ -265,7 +265,7 @@ The following permissions are required for the SDK:
 	**Type I:**
    
    ```sh 
-   //Preparing the Constructor with valid API-key , APP-ID , language , domain and Logging
+   //Preparing the Constructor with a valid API key, APP-ID, language, domain, and Logging
    
     RevVoiceInput voiceInput = = new RevVoiceInput(
                 API_KEY,
@@ -292,13 +292,12 @@ The following permissions are required for the SDK:
 
             @Override
             public void onResult(VoiceInputResultData result) {
-                Log.d(TAG, "onResult: " + result);
-                outputTv.setText(result.toString());
+                //Log.d(TAG, "onResult: " + result);
             }
 
             @Override
             public void onError(VoiceInputErrorResponseData error) {
-                outputTv.setText(error.toString());
+    		//Log.d(TAG, "onError: " + error.toString());
             }
 
             @Override
@@ -353,7 +352,7 @@ The following permissions are required for the SDK:
     ```sh
       voiceInput.setNoInputTimeout(5);
    ```
-9. (Optional) To Set the the TimeOut    
+9. (Optional) To Set the TimeOut    
     ```sh
       voiceInput.setTimeout(5);
     ```
