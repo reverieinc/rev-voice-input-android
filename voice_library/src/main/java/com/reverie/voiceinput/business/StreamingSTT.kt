@@ -35,7 +35,11 @@ import java.util.*
  *  @param app_id:  pass the app_id
 ````
 >**/
-internal class StreamingSTT(context: Context?, private var apikey: String, private var app_id: String) :
+internal class StreamingSTT(
+    context: Context?,
+    private var apikey: String,
+    private var app_id: String
+) :
     CustomAudioRecorder.RecordingStateListener {
 
     private var mContext: Context? = context
@@ -43,9 +47,9 @@ internal class StreamingSTT(context: Context?, private var apikey: String, priva
     lateinit var streamingSTTResultListener: StreamingSTTResultListener
     private lateinit var langCode: String
     private lateinit var domain: String
-    private var noInputTimeout=2
-    private var silence=1
-    private var timeout=15
+    private var noInputTimeout = 2
+    private var silence = 1
+    private var timeout = 15
     val handler = Handler(Looper.getMainLooper())
     private var isFinal = false
 
@@ -108,24 +112,30 @@ internal class StreamingSTT(context: Context?, private var apikey: String, priva
 
 
 
-                if (result?.final == true)
-                { StreamingSTT.inProcess =false
-                    stopRecognitions()
+                if (result?.final == true) {
+                    StreamingSTT.inProcess = false
+
+                    if(!isEOF)
+                    {stopRecognitions()}
                     isFinal = true
 
                 }
             }
 
             override fun onError(result: VoiceInputErrorResponseData) {
-
+                StreamingSTT.isEOF = false
                 if (!isFinal) {
                     handler.post {
-                        StreamingSTT.inProcess =false
+
+                        if (inProcess) {
+
+                            cancelRecognitions()
+                        }
+                        StreamingSTT.inProcess = false
                         streamingSTTResultListener!!.onError(result)
                     }
                 }
 
-                stopRecognitions()
             }
 
             override fun onEvent(stage: Int) {
@@ -147,22 +157,23 @@ internal class StreamingSTT(context: Context?, private var apikey: String, priva
      *  @param domain:  pass the domain as per requirement
 
      */
-    fun setNoInputTimeout(noInputTimeout:Int)
-    {
+    fun setNoInputTimeout(noInputTimeout: Int) {
 
-        this.noInputTimeout=noInputTimeout
+        this.noInputTimeout = noInputTimeout
     }
-    fun setSilence(silence:Int)
-    {
 
-        this.silence=silence
+    fun setSilence(silence: Int) {
+
+        this.silence = silence
     }
-    fun setTimeout(timeout: Int)
-    {
-        this.timeout=timeout
+
+    fun setTimeout(timeout: Int) {
+        this.timeout = timeout
 
     }
+
     fun startRecognitions(langCode: String, domain: String, logging: String) {
+        isEOF=false
         if (StreamingSTT.inProcess) {
             return
         }
@@ -183,6 +194,7 @@ internal class StreamingSTT(context: Context?, private var apikey: String, priva
                         customAudioRecorder.setOutputFile(mFileName)
                         customAudioRecorder.setSpeechClient(customSocketListener)
                         StreamingSTT.inProcess = true
+                        customLogger("onErrorStop", inProcess.toString())
                         customAudioRecorder.prepare()
                         customSocketListener!!.setSilence(silence)
                         customSocketListener!!.setTimeout(timeout)
@@ -209,7 +221,8 @@ internal class StreamingSTT(context: Context?, private var apikey: String, priva
 
                     }
                 } else {
-                    handler.post { StreamingSTT.inProcess =false
+                    handler.post {
+                        StreamingSTT.inProcess = false
                         streamingSTTResultListener.onError(
                             parseError(
                                 WARNING_NO_INTERNET,
@@ -222,7 +235,7 @@ internal class StreamingSTT(context: Context?, private var apikey: String, priva
                 }
             } else {
                 handler.post {
-                    StreamingSTT.inProcess =false
+                    StreamingSTT.inProcess = false
                     streamingSTTResultListener.onError(
                         parseError(
                             WARNING_PERMISSIONS_GRANT_REQUIRED,
@@ -233,7 +246,7 @@ internal class StreamingSTT(context: Context?, private var apikey: String, priva
             }
         } else {
             handler.post {
-                StreamingSTT.inProcess =false
+                StreamingSTT.inProcess = false
                 streamingSTTResultListener.onError(
                     parseError(
                         WARNING_MISSING_MANIFEST,
@@ -246,28 +259,36 @@ internal class StreamingSTT(context: Context?, private var apikey: String, priva
     }
 
     fun stopRecognitions() {
+
 //        if (!isRecording) {
 //            return
 //        }
-        StreamingSTT.inProcess =false
-            if (customAudioRecorder != null) {
-                customSocketListener!!.endRequest()
-                customAudioRecorder.stop()
-                customAudioRecorder.release()
-                customAudioRecorder.reset()
-            }
-        isRecording = false
-    }
 
-    fun cancelRecognitions() {
-        StreamingSTT.inProcess =false
-        if (customAudioRecorder != null) {
-            customSocketListener!!.cancelRequest()
+        if (customAudioRecorder != null&& isRecording) {
+            customSocketListener!!.endRequest()
+
             customAudioRecorder.stop()
             customAudioRecorder.release()
             customAudioRecorder.reset()
         }
         isRecording = false
+        StreamingSTT.inProcess = false
+    }
+
+    fun cancelRecognitions() {
+
+        if (customAudioRecorder != null&& isRecording) {
+
+            customSocketListener!!.cancelRequest()
+
+            customAudioRecorder.stop()
+            customAudioRecorder.release()
+            customAudioRecorder.reset()
+            isEOF=false
+        }
+        isRecording = false
+        StreamingSTT.inProcess = false
+     //   StreamingSTT.inProcess = false
     }
 
     companion object {
@@ -275,6 +296,7 @@ internal class StreamingSTT(context: Context?, private var apikey: String, priva
         private var isRecording = false
         private var mFileName: String? = null
         internal var inProcess: Boolean = false
+        internal var isEOF: Boolean =false
     }
 
 
@@ -288,7 +310,7 @@ internal class StreamingSTT(context: Context?, private var apikey: String, priva
     }
 
     override fun recordingEnd(stop: Boolean) {
-        StreamingSTT.inProcess =false
+        StreamingSTT.inProcess = false
         handler.post { streamingSTTResultListener.onRecordingEnd(stop) }
 
 

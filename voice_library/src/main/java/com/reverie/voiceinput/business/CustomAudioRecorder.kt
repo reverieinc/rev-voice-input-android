@@ -349,6 +349,7 @@ constructor(
      */
     fun release() {
         if (state == State.RECORDING) {
+
             stop()
         } else {
             if ((state == State.READY) and rUncompressed) {

@@ -29,7 +29,7 @@ public class JavaDemo extends AppCompatActivity {
     RevVoiceInput voiceInput;
 
     TextView outputTv;
-    private static final String TAG = "JavaDemo";
+    private static final String TAG = "JavaDemoTest";
 
 
     @Override
@@ -43,14 +43,14 @@ public class JavaDemo extends AppCompatActivity {
         stopBtn = findViewById(R.id.stopBtn);
         outputTv = findViewById(R.id.outputTv);
         searchBtnWithoutUi = findViewById(R.id.searchBtnwithoutUi);
-        LOG.Companion.setDEBUG(false);// implement customlogger
+        LOG.Companion.setDEBUG(true);// implement customlogger
 
         voiceInput = new RevVoiceInput(
                 BuildConfig.API_KEY,
                 BuildConfig.APP_ID, Domain.VOICE_SEARCH, Languages.ENGLISH, Logging.TRUE);
         voiceInput.setNoInputTimeout(5);
         voiceInput.setSilence(2);
-        voiceInput.setTimeout(5);
+        voiceInput.setTimeout(45);
         Log.d("VOICE", "onCreate: " + Domain.VOICE_SEARCH);
         Log.d("VOICE", "onCreate: " + Languages.ENGLISH);
         Log.d("VOICE", "BuildConfig.APP_ID: " + BuildConfig.APP_ID);
@@ -64,34 +64,36 @@ public class JavaDemo extends AppCompatActivity {
             @Override
             public void onError(VoiceInputErrorResponseData error) {
                 //   outputTv.setText(error.toString() + error.getCode());
-                Log.e(TAG, "onError full: "+error.toString());
+                Log.e(TAG, "onError full: " + error.toString());
 
             }
 
             @Override
             public void onRecordingStart(boolean isStart) {
-
+                Log.d(TAG, "onRecordingStart: ");
             }
 
             @Override
             public void onRecordingEnd(boolean isEnd) {
-
+                Log.d(TAG, "onRecordingEnd1: ");
             }
 
 
         });
-
+        searchBtn.setText("FinishInput");
         searchBtn.setOnClickListener(view -> {
             outputTv.setText("");
 
 
-            voiceInput.startRecognition(
-                    getApplicationContext(),
-                    true
-            );
+//            voiceInput.startRecognition(
+//                    getApplicationContext(),
+//                    true
+//            );
+            voiceInput.finishInput();
 
 
         });
+        stopBtn.setText("Cancel");
         stopBtn.setOnClickListener(view -> voiceInput.cancel());
         searchBtnWithoutUi.setOnClickListener(view -> {
             voiceInput.startRecognition(getApplicationContext(), false, Domain.VOICE_SEARCH, Languages.ENGLISH);

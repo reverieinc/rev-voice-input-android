@@ -15,8 +15,8 @@ android {
         versionName "1.0"
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        buildConfigField "String", "API_KEY", "\"${properties.getProperty("API_KEY")}\""
-        buildConfigField "String", "APP_ID", "\"${properties.getProperty("APP_ID")}\""
+        buildConfigField "String", "API_KEY", "\"${properties.getProperty("API-KEY")}\""
+        buildConfigField "String", "APP_ID", "\"${properties.getProperty("APP-ID")}\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -44,7 +44,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
-//  implementation files('libs/reverie-voice-input_v1.0.1-release.aar')
+//  implementation files('libs/reverie-voice-input-v1.0.2-release.aar')
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation project(":voice_library")
 }

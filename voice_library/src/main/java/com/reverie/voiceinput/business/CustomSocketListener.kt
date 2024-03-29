@@ -34,9 +34,9 @@ internal class CustomSocketListener : WebSocketListener() {
     private var socket: WebSocket? = null
     private val handler = Handler(Looper.getMainLooper())
     private var context: Context? = null
-    private  var noInputTimeout=2
-    private var silence=1
-    private  var timeout=15
+    private var noInputTimeout = 2
+    private var silence = 1
+    private var timeout = 15
 
     interface EventCallback {
         fun onEvent(stage: Int)
@@ -86,41 +86,47 @@ internal class CustomSocketListener : WebSocketListener() {
         customLogger(TAG, "Request started")
         run(langCode, domain, apikey, appid, logging)
     }
-    fun setNoInputTimeout(noInputTimeout:Int)
-    {
-        this.noInputTimeout=noInputTimeout
+
+    fun setNoInputTimeout(noInputTimeout: Int) {
+        this.noInputTimeout = noInputTimeout
 
     }
 
-    fun setSilence(silence:Int)
-    {
+    fun setSilence(silence: Int) {
 
-        this.silence=silence
+        this.silence = silence
 
     }
-    fun setTimeout(timeout:Int)
-    {
-        this.timeout=timeout
+
+    fun setTimeout(timeout: Int) {
+        this.timeout = timeout
     }
+
     /**
      * Stop listening to audio, end the streaming cycle
      */
     fun endRequest() {
-        StreamingSTT.inProcess =false
+
+//
+//        StreamingSTT.inProcess =false
+        StreamingSTT.isEOF = true
         customLogger(TAG, "Ending request")
 
 //        if (socket != null) socket!!.send("--EOF--".encodeUtf8())
         val byteArray = "--EOF--".toByteArray(charset("UTF-8"))
         val byteString = ByteString.of(*byteArray)
+
         if (socket != null) socket!!.send(byteString)
 
 
     }
 
     fun cancelRequest() {
-        StreamingSTT.inProcess =false
-        if (socket != null)
+        StreamingSTT.inProcess = false
+        if (socket != null) {
             socket!!.cancel()
+            StreamingSTT.isEOF = false
+        }
     }
 
 
@@ -140,13 +146,12 @@ internal class CustomSocketListener : WebSocketListener() {
         logging: String
     ) {
         val client = OkHttpClient.Builder()
-            .readTimeout(10, TimeUnit.SECONDS).connectTimeout(10,TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS).connectTimeout(10, TimeUnit.SECONDS)
             .build()
 
         var streamUrl =
             "${REV_STT_STREAM_URL}apikey=$apikey&appid=$appid&appname=stt_stream&src_lang=$langCode&domain=$domain&logging=$logging&timeout=$timeout&silence=$silence&no_input_timeout=$noInputTimeout"
-        if(LOG.DEBUG)
-        {
+        if (LOG.DEBUG) {
             streamUrl += "debug=true"
         }
         customLogger(TAG, "rev url= $streamUrl")
@@ -170,7 +175,7 @@ internal class CustomSocketListener : WebSocketListener() {
     }
 
     private fun parseError(message: String, code: Int): VoiceInputErrorResponseData {
-        StreamingSTT.inProcess =false
+        //StreamingSTT.inProcess =false
         return VoiceInputErrorResponseData(message, code)
     }
 
@@ -199,25 +204,28 @@ internal class CustomSocketListener : WebSocketListener() {
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosing(webSocket, code, reason)
         webSocket.close(1000, null)
-        StreamingSTT.inProcess =false
+        StreamingSTT.inProcess = false
         Log.d(TAG, "onClosing: ")
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         customLogger(TAG, "onFailure: ")
-        StreamingSTT.inProcess =false
+
 
         if (response != null && response!!.code != null && response!!.message != null) {
+
             var sttErrorResponseData = t.message?.let { parseError(it, response!!.code) }
             sttErrorResponseData?.let { listener!!.onError(it) }
         } else {
             t.message?.let { parseError(it, 0) }?.let { listener!!.onError(it) }
         }
+//       StreamingSTT.inProcess =false
     }
 
-  override  fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-      Log.d(TAG, "onClosed: ")
+    override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+        Log.d(TAG, "onClosed: ")
     }
+
     companion object {
         private const val TAG = "CustomSocketListener"
         const val SOCKET_OPENED = 1
