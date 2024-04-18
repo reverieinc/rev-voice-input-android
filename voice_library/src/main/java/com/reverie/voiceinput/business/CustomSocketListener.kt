@@ -34,9 +34,9 @@ internal class CustomSocketListener : WebSocketListener() {
     private var socket: WebSocket? = null
     private val handler = Handler(Looper.getMainLooper())
     private var context: Context? = null
-    private var noInputTimeout = 2
-    private var silence = 1
-    private var timeout = 15
+    private var noInputTimeout = 2.0
+    private var silence = 1.0
+    private var timeout = 15.0
 
     interface EventCallback {
         fun onEvent(stage: Int)
@@ -87,18 +87,18 @@ internal class CustomSocketListener : WebSocketListener() {
         run(langCode, domain, apikey, appid, logging)
     }
 
-    fun setNoInputTimeout(noInputTimeout: Int) {
+    fun setNoInputTimeout(noInputTimeout: Double) {
         this.noInputTimeout = noInputTimeout
 
     }
 
-    fun setSilence(silence: Int) {
+    fun setSilence(silence: Double) {
 
         this.silence = silence
 
     }
 
-    fun setTimeout(timeout: Int) {
+    fun setTimeout(timeout: Double) {
         this.timeout = timeout
     }
 

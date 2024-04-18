@@ -47,9 +47,9 @@ internal class StreamingSTT(
     lateinit var streamingSTTResultListener: StreamingSTTResultListener
     private lateinit var langCode: String
     private lateinit var domain: String
-    private var noInputTimeout = 2
-    private var silence = 1
-    private var timeout = 15
+    private var noInputTimeout = 2.0
+    private var silence = 1.0
+    private var timeout = 15.0
     val handler = Handler(Looper.getMainLooper())
     private var isFinal = false
 
@@ -157,17 +157,17 @@ internal class StreamingSTT(
      *  @param domain:  pass the domain as per requirement
 
      */
-    fun setNoInputTimeout(noInputTimeout: Int) {
+    fun setNoInputTimeout(noInputTimeout: Double) {
 
         this.noInputTimeout = noInputTimeout
     }
 
-    fun setSilence(silence: Int) {
+    fun setSilence(silence:Double) {
 
         this.silence = silence
     }
 
-    fun setTimeout(timeout: Int) {
+    fun setTimeout(timeout: Double) {
         this.timeout = timeout
 
     }

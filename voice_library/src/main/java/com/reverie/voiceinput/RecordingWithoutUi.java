@@ -56,7 +56,7 @@ class RecordingWithoutUi {
      *                 3. no_transcript - does not keep transcript in logs but stores client’s audio.
      *                 4. false - does not keep neither client’s audio nor transcript in log
      */
-    RecordingWithoutUi(Context context, String apiKey, String appId, String domain, String lang, String logging,int noInputTimeout,int silence,int timeout) {
+    RecordingWithoutUi(Context context, String apiKey, String appId, String domain, String lang, String logging,double noInputTimeout,double silence,double timeout) {
         this.context = context;
         this.apiKey = apiKey;
         this.appId = appId;

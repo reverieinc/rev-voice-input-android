@@ -48,9 +48,9 @@ public class JavaDemo extends AppCompatActivity {
         voiceInput = new RevVoiceInput(
                 BuildConfig.API_KEY,
                 BuildConfig.APP_ID, Domain.VOICE_SEARCH, Languages.ENGLISH, Logging.TRUE);
-        voiceInput.setNoInputTimeout(5);
-        voiceInput.setSilence(2);
-        voiceInput.setTimeout(45);
+        voiceInput.setNoInputTimeout(5.0);
+        voiceInput.setSilence(0.7);
+        voiceInput.setTimeout(45.0);
         Log.d("VOICE", "onCreate: " + Domain.VOICE_SEARCH);
         Log.d("VOICE", "onCreate: " + Languages.ENGLISH);
         Log.d("VOICE", "BuildConfig.APP_ID: " + BuildConfig.APP_ID);

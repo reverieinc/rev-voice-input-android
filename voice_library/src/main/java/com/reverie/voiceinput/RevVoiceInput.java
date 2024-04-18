@@ -45,10 +45,10 @@ public class RevVoiceInput {
 
 
 
-    private int noInputTimeout=2;
-    private int silence=1;
+    private double noInputTimeout=2.0;
+    private double silence=1.0;
 
-    private int timeout=15;
+    private double timeout=15.0;
 
 
 
@@ -70,21 +70,21 @@ public class RevVoiceInput {
      * Set the parameter for noInputTimeout
      * @param noInputTimeout int value of noInputTimeout
      */
-    public void setNoInputTimeout(int noInputTimeout) {
+    public void setNoInputTimeout(Double noInputTimeout) {
         this.noInputTimeout = noInputTimeout;
     }
 /**
  * Set the parameter for silence
  * @param silence int value of silence
 * */
-    public void setSilence(int silence) {
+    public void setSilence(Double silence) {
         this.silence = silence;
     }
     /**
      * Set the parameter for silence
      * @param timeout int value of silence
      * */
-    public void setTimeout(int timeout)
+    public void setTimeout(Double timeout)
     {
         this.timeout=timeout;
 
