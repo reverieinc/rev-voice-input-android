@@ -131,7 +131,7 @@ dependencyResolutionManagement {
 and add the following to the app-level dependencies:
 ```
 dependencies {
-	  implementation ("com.github.reverieinc:rev-voice-input-android:1.0.2")
+	  implementation ("com.github.reverieinc:rev-voice-input-android:1.0.3")
 }
 
 ```
@@ -242,15 +242,15 @@ The following permissions are required for the SDK:
    ```
 9. (Optional) To Set the No Input Timeout
     ```sh
-      voiceInput.setNoInputTimeout(5)
+      voiceInput.setNoInputTimeout(5.0)
    ```
 10. (Optional) To Set the TimeOut
     ```sh
-      voiceInput.setTimeout(5)
+      voiceInput.setTimeout(5.0)
     ```
 11. (Optional) To Set the Silence
     ```sh
-      voiceInput.setSilence(2)
+      voiceInput.setSilence(2.0)
     ```   
 12. (Optional) To Enable Logging
     ```sh
@@ -350,15 +350,15 @@ The following permissions are required for the SDK:
    ```
 8. (Optional) To Set the No Input Timeout
     ```sh
-      voiceInput.setNoInputTimeout(5);
+      voiceInput.setNoInputTimeout(5.0);
    ```
 9. (Optional) To Set the TimeOut    
     ```sh
-      voiceInput.setTimeout(5);
+      voiceInput.setTimeout(5.0);
     ```
 10. (Optional) To Set the Silence
     ```sh
-      voiceInput.setSilence(2)
+      voiceInput.setSilence(2.0)
     ```
 11. (Optional) To Enable Logging(Logcat)
     ```sh
