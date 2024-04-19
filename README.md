@@ -52,20 +52,20 @@ There are two **startRecognitions()** methods in the **RevVoiceInput** class. Th
 ### startRecognition()
 ##### Method 1
 
-| Element    | Type    | Required | Default        | Description                 |
-|------------|---------|----------|----------------|-----------------------------|
-| Context    | context | true     | -              | Context of the activity     |
-| isUiNeeded | boolean | true     | -              | Is Ui needed in client side |
-| Language   | String  | false    | ‘en’           | Language of Input          |
-| Domain     | String  | false    | ‘voice_search’ | Domain of Input            |
+| Element    | Type    | Required | Default        | Description                          |
+|------------|---------|----------|----------------|--------------------------------------|
+| Context    | context | true     | -              | Context of the activity              |
+| isUiNeeded | boolean | true     | -              | to use bundled UI element of the SDK |
+| Language   | String  | false    | ‘en’           | Language of Input                    |
+| Domain     | String  | false    | ‘voice_search’ | Domain of Input                      |
 
 
 #### Method 2
 
-| Element    | Type    | Required | Default        | Description                 |
-|------------|---------|----------|----------------|-----------------------------|
-| Context    | context | true     | -              | Context of the activity     |
-| isUiNeeded | boolean | true     | -              | to use bundled UI element of the SDK |
+| Element    | Type    | Required | Default | Description                          |
+|------------|---------|----------|---------|--------------------------------------|
+| Context    | context | true     | -       | Context of the activity              |
+| isUiNeeded | boolean | true     | -       | to use bundled UI element of the SDK |
 
 
 
@@ -74,19 +74,19 @@ There are two **startRecognitions()** methods in the **RevVoiceInput** class. Th
 Various constant values are provided in SDK for DOMAIN, LANGUAGES, and LOGGING parameters
 
 #### Domain
-1. Domain.VOICE_SEARCH
-2. Domain.GENERIC
-3. Domain.BFSI
+1. `Domain.VOICE_SEARCH`
+2. `Domain.GENERIC`
+3. `Domain.BFSI`
 
 #### Languages
-1.  Languages.ENGLISH
-2.  Languages.HINDI
+1.  `Languages.ENGLISH`
+2.  `Languages.HINDI`
 
 #### Logging
-1.  Logging.TRUE - stores client’s audio and keeps transcript in logs.
-2.  Logging.NO_AUDIO -  does not store client’s audio but keeps transcript in logs.
-3.  Logging.NO_TRANSCRIPT - does not keep transcript in logs but stores client’s audio.
-4.  Logging.FALSE - does not keep the client’s audio or the transcript in the log.
+1.  `Logging.TRUE` - stores client’s audio and keeps transcript in logs.
+2.  `Logging.NO_AUDIO` -  does not store client’s audio but keeps transcript in logs.
+3.  `Logging.NO_TRANSCRIPT` - does not keep transcript in logs but stores client’s audio.
+4.  `Logging.FALSE` - does not keep the client’s audio or the transcript in the log.
 
 
 
@@ -95,64 +95,61 @@ Various constant values are provided in SDK for DOMAIN, LANGUAGES, and LOGGING p
 
 
 To integrate the SDK into your application, follow these steps:
+1. Addition of Gradle dependencies as follows:
 
-Gradle:
+   - ##### **Groovy:**
 
-##### **Groovy:**
+       Add the `jitpack.io` repository to `settings.gradle` file:
+       ```groovy
+       dependencyResolutionManagement {
+               repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+               repositories {
+                   mavenCentral()
+                   maven { url 'https://jitpack.io' }
+               }
+           }
+       ```
+       and add the following to the app-level dependencies:
+       ```groovy
+       dependencies {
+             implementation 'com.github.reverieinc:rev-voice-input-android:1.0.2'
+       }
+       ```
 
-Add the `jitpack.io` repository to `settings.gradle` file:
-```groovy
-dependencyResolutionManagement {
-		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-		repositories {
-			mavenCentral()
-			maven { url 'https://jitpack.io' }
-		}
-	}
-```
-and add the following to the app-level dependencies:
-```
-dependencies {
-	  implementation 'com.github.reverieinc:rev-voice-input-android:1.0.2'
-}
-```
-
-##### **Kotlin DSL:**
-Add the `jitpack.io` repository to `settings.gradle` file:
-```
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        mavenCentral()
-        maven { url = uri("https://jitpack.io") }
-    }
-}
-```
-and add the following to the app-level dependencies:
-```
-dependencies {
-	  implementation ("com.github.reverieinc:rev-voice-input-android:1.0.3")
-}
-
-```
-
-
-> Note: Verify that the correct file name is added as a dependency.
->
-> Min Supported Android SDK-21
+   - ##### **or Kotlin DSL:**
+       Add the `jitpack.io` repository to `settings.gradle` file:
+       ```groovy
+       dependencyResolutionManagement {
+           repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+           repositories {
+               mavenCentral()
+               maven { url = uri("https://jitpack.io") }
+           }
+       }
+       ```
+       and add the following to the app-level dependencies:
+       ```groovy
+       dependencies {
+             implementation ("com.github.reverieinc:rev-voice-input-android:1.0.2")
+       }
+    
+       ```
+     > Note:
+     > - Verify that the latest version is added as a dependency.
+     > - Min Supported Android SDK-21
 
 
-### Necessary Permissions
+2. Addition of Necessary Manifest Permissions
 
-The following permissions are required for the SDK:
-
-```sh
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission  android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-```
-
-
+    Add the following permissions in your manifest:
+    
+    ```xml
+        <uses-permission android:name="android.permission.INTERNET" />
+        <uses-permission  android:name="android.permission.ACCESS_NETWORK_STATE"/>
+        <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    ```
+   > Make sure to request the user to grant the RECORD_AUDIO permission at runtime.
+   
 
 ## SDK usage example:
 - [Kotlin based](#kotlin-based-example-implementation-of-the-sdk)
@@ -162,6 +159,8 @@ The following permissions are required for the SDK:
 
 
 
+<details open>
+  <summary>Kotlin</summary>
 
 ### Kotlin-based example implementation of the SDK:
 
@@ -170,7 +169,7 @@ The following permissions are required for the SDK:
 
    **Type I:**
    
-    ```sh
+    ```kotlin
     //Preparing the Constructor with  API-key, APP-ID, language, domain, and logging
         val  voiceInput=RevVoiceInput(API_KEY,APP_ID,
         Domain.VOICE_SEARCH, 
@@ -179,7 +178,7 @@ The following permissions are required for the SDK:
     ```
 	**Type II:**
 
-     ```sh
+     ```kotlin
     //Preparing the constructor with a valid API key and APP-ID
           val voiceInput = RevVoiceInput(API_KEY, APP_ID,Logging.TRUE)
     ```
@@ -187,7 +186,7 @@ The following permissions are required for the SDK:
 
 
 3. Implement the listener:
-    ```sh
+    ```kotlin
     //Implement the listener to get results and error details
          voiceInput.setListener(object : VoiceInputListener {
           override fun onResult(result: VoiceInputResultData?) {
@@ -212,7 +211,7 @@ The following permissions are required for the SDK:
 
    **Type I:**
    
-    ```sh
+    ```kotlin
         voiceInput.startRecognition(
                     getApplicationContext(),
                     true
@@ -221,7 +220,7 @@ The following permissions are required for the SDK:
             )
     ```
     **Type II:**
-    ```sh
+    ```kotlin
    //To start the voice search
           voiceInput.startRecognition(
               applicationContext,
@@ -231,40 +230,46 @@ The following permissions are required for the SDK:
 	> For more details about the types check: [API Reference](#api-reference)
 
 7. (Optional) Abort the search process
-    ```sh
+    ```kotlin
          //To stop the voice searching forcefully
        voiceInput.cancel()
    ```
 8. (Optional) Finish the search process
-    ```sh
+    ```kotlin
          //To stop the voice searching forcefully and get the result
        voiceInput.finishInput()
    ```
 9. (Optional) To Set the No Input Timeout
-    ```sh
-      voiceInput.setNoInputTimeout(5.0)
+    ```kotlin
+      voiceInput.setNoInputTimeout(5)
    ```
 10. (Optional) To Set the TimeOut
-    ```sh
-      voiceInput.setTimeout(5.0)
+    ```kotlin
+      voiceInput.setTimeout(5)
     ```
 11. (Optional) To Set the Silence
-    ```sh
-      voiceInput.setSilence(2.0)
+    ```kotlin
+      voiceInput.setSilence(2)
     ```   
 12. (Optional) To Enable Logging
-    ```sh
+    ```kotlin
       import com.reverie.voiceinput.LOG;
    
        LOG.DEBUG=true
     ```
+
+</details>
+
+<details>
+  <summary>Java</summary>
+
 ### Java based example implementation of the SDK:
 
 1. Prepare the constructor:
 
 	**Type I:**
    
-   ```sh 
+   ```java 
    //Preparing the Constructor with a valid API key, APP-ID, language, domain, and Logging
    
     RevVoiceInput voiceInput = = new RevVoiceInput(
@@ -275,7 +280,7 @@ The following permissions are required for the SDK:
    
     ```
    **Type II:**
-     ```sh
+     ```java
         //Preparing the constructor with valid API key and APP-ID
         RevVoiceInput voiceInput = new RevVoiceInput(API_KEY, APP_ID,Logging.TRUE);
               
@@ -284,7 +289,7 @@ The following permissions are required for the SDK:
    > For more details about the types check: [API Reference](#api-reference)
 
 3. Implement the listeners:
-    ```sh
+    ```java
           //Implement the listener to get results and error details
        voiceInput.setListener(new VoiceInputListener() {
 
@@ -316,7 +321,7 @@ The following permissions are required for the SDK:
 4. Starting the search Process.
 
    **Type I:**
-      ```sh
+      ```java
 
     voiceInput.startRecognition(
     getApplicationContext(),
@@ -327,7 +332,7 @@ The following permissions are required for the SDK:
     ```
       **Type II:**
    
-    ```sh
+    ```java
     //To Start the Voice Input
           voiceInput.startRecognition(
               getApplicationContext(),//Context
@@ -339,33 +344,36 @@ The following permissions are required for the SDK:
    > For more details about the types check: [API Reference](#api-reference)
 
 6. (Optional) Abort the search process
-    ```sh
+    ```java
          //To stop the voice searching forcefully
        voiceInput.cancel();
    ```
 7. (Optional) Finish the search process
-    ```sh
+    ```java
          //To stop the voice searching forcefully and get the result
        voiceInput.finishInput();
    ```
 8. (Optional) To Set the No Input Timeout
-    ```sh
-      voiceInput.setNoInputTimeout(5.0);
+    ```java
+      voiceInput.setNoInputTimeout(5);
    ```
 9. (Optional) To Set the TimeOut    
-    ```sh
-      voiceInput.setTimeout(5.0);
+    ```java
+      voiceInput.setTimeout(5);
     ```
 10. (Optional) To Set the Silence
-    ```sh
-      voiceInput.setSilence(2.0)
+    ```java
+      voiceInput.setSilence(2)
     ```
 11. (Optional) To Enable Logging(Logcat)
-    ```sh
+    ```java
         import com.reverie.voiceinput.LOG;
       
         LOG.Companion.setDEBUG(true);
     ```   
+
+
+</details>
 
 License
 -------
