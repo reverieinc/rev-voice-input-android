@@ -15,6 +15,14 @@
         android:textColor="@color/black"
         android:textSize="16sp" />
     <Button
+        android:id="@+id/searchBtnwithUi"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:layout_above="@id/searchBtnwithoutUi"
+        android:layout_marginBottom="20dp"
+        android:text="Search With UI" />
+    <Button
         android:id="@+id/searchBtnwithoutUi"
         android:layout_width="200dp"
         android:layout_height="40dp"

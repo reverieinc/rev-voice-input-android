@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,7 +25,7 @@ import com.reverie.voiceinput.utilities.constants.Logging;
 
 
 public class JavaDemo extends AppCompatActivity {
-    Button searchBtn, stopBtn, searchBtnWithoutUi;
+    Button FinishBtn, stopBtn, searchBtnWithoutUi,searchBtnWithUi;
     //    RevVoiceInput voiceSearch;
     RevVoiceInput voiceInput;
 
@@ -39,7 +40,8 @@ public class JavaDemo extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 100);
         }
-        searchBtn = findViewById(R.id.searchBtn);
+        FinishBtn = findViewById(R.id.searchBtn);
+        searchBtnWithUi=findViewById(R.id.searchBtnwithUi);
         stopBtn = findViewById(R.id.stopBtn);
         outputTv = findViewById(R.id.outputTv);
         searchBtnWithoutUi = findViewById(R.id.searchBtnwithoutUi);
@@ -80,8 +82,8 @@ public class JavaDemo extends AppCompatActivity {
 
 
         });
-        searchBtn.setText("FinishInput");
-        searchBtn.setOnClickListener(view -> {
+        FinishBtn.setText("FinishInput");
+        FinishBtn.setOnClickListener(view -> {
             outputTv.setText("");
 
 
@@ -92,6 +94,12 @@ public class JavaDemo extends AppCompatActivity {
             voiceInput.finishInput();
 
 
+        });
+        searchBtnWithUi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                voiceInput.startRecognition(getApplicationContext(), true, Domain.VOICE_SEARCH, Languages.ENGLISH);
+            }
         });
         stopBtn.setText("Cancel");
         stopBtn.setOnClickListener(view -> voiceInput.cancel());

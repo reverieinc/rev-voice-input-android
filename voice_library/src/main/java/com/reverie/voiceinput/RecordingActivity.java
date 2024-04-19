@@ -64,10 +64,10 @@ public class RecordingActivity extends AppCompatActivity {
 
     private String logging = "";
 
-    private int silence = 1;
-    private int noInputTimeout = 2;
+    private double silence = 1;
+    private double noInputTimeout = 2;
     private TextView listeningTextView;
-    private int timeout = 15;
+    private double timeout = 15;
 
     @SuppressLint({"MissingInflatedId", "ResourceAsColor"})
     @Override
@@ -81,9 +81,9 @@ public class RecordingActivity extends AppCompatActivity {
         lang = i.getStringExtra(ConstantsKt.INTENT_LANG);
         domain = i.getStringExtra(ConstantsKt.INTENT_DOMAIN);
         logging = i.getStringExtra(ConstantsKt.INTENT_LOGGING);
-        silence = i.getIntExtra(ConstantsKt.SILENCE, 1);
-        noInputTimeout = i.getIntExtra(ConstantsKt.NO_INPUT_TIMEOUT, 2);
-        timeout = i.getIntExtra(ConstantsKt.TIMEOUT, 15);
+        silence = i.getDoubleExtra(ConstantsKt.SILENCE, 1);
+        noInputTimeout = i.getDoubleExtra(ConstantsKt.NO_INPUT_TIMEOUT, 2);
+        timeout = i.getDoubleExtra(ConstantsKt.TIMEOUT, 15);
 
         isCancel = false;
         listeningTextView = findViewById(R.id.listening_text);
