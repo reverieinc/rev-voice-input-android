@@ -28,7 +28,6 @@
 -keep public class * {
     public protected *;
 }
+#-keep class com.squareup.okhttp3.** { *; }
+#-keep class com.reverie.voiceinput.** { *; }
 
--keepclassmembers class com.reverie.voiceinput.** {
-   public *;
-}
