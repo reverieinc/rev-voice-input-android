@@ -112,7 +112,7 @@ To integrate the SDK into your application, follow these steps:
        and add the following to the app-level dependencies:
        ```groovy
        dependencies {
-             implementation 'com.github.reverieinc:rev-voice-input-android:1.0.2'
+             implementation 'com.github.reverieinc:rev-voice-input-android:1.0.3'
        }
        ```
 
@@ -241,15 +241,15 @@ To integrate the SDK into your application, follow these steps:
    ```
 9. (Optional) To Set the No Input Timeout
     ```kotlin
-      voiceInput.setNoInputTimeout(5)
+      voiceInput.setNoInputTimeout(5.0)
    ```
 10. (Optional) To Set the TimeOut
     ```kotlin
-      voiceInput.setTimeout(5)
+      voiceInput.setTimeout(5.0)
     ```
 11. (Optional) To Set the Silence
     ```kotlin
-      voiceInput.setSilence(2)
+      voiceInput.setSilence(2.0)
     ```   
 12. (Optional) To Enable Logging
     ```kotlin
@@ -355,15 +355,15 @@ To integrate the SDK into your application, follow these steps:
    ```
 8. (Optional) To Set the No Input Timeout
     ```java
-      voiceInput.setNoInputTimeout(5);
+      voiceInput.setNoInputTimeout(5.0);
    ```
 9. (Optional) To Set the TimeOut    
     ```java
-      voiceInput.setTimeout(5);
+      voiceInput.setTimeout(5.0);
     ```
 10. (Optional) To Set the Silence
     ```java
-      voiceInput.setSilence(2)
+      voiceInput.setSilence(2.0)
     ```
 11. (Optional) To Enable Logging(Logcat)
     ```java

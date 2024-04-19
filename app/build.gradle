@@ -45,6 +45,7 @@ dependencies  {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
 //  implementation files('libs/reverie-voice-input-v1.0.3-release.aar')
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation project(":voice_library")
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+//    implementation project(":voice_library")
+    implementation 'com.github.reverieinc:rev-voice-input-android:1.0.3'
 }
