@@ -129,7 +129,7 @@ constructor(
 
                     if (customSocketListener != null && isSocketOpened) {
                         customSocketListener!!.addData(bufferNotSent)
-                        randomAccessWriter!!.write(bufferNotSent)
+
                         bufferNotSent = byteArrayOf()
 
                     }
@@ -289,30 +289,30 @@ constructor(
                     customLogger("status", audioRecorder?.state.toString() + " " + filePath)
                     if ((audioRecorder!!.state == AudioRecord.STATE_INITIALIZED) and (filePath != null)) {
                         // write file header
-                        randomAccessWriter = RandomAccessFile(filePath, "rw")
-                        randomAccessWriter!!.setLength(0) // Set file length to 0, to prevent unexpected behavior in case the file already existed
-                        randomAccessWriter!!.writeBytes("RIFF")
-                        randomAccessWriter!!.writeInt(0) // Final file size not known yet, write 0
-                        randomAccessWriter!!.writeBytes("WAVE")
-                        randomAccessWriter!!.writeBytes("fmt ")
-                        randomAccessWriter!!.writeInt(Integer.reverseBytes(16)) // Sub-chunk size, 16 for PCM
-                        randomAccessWriter!!.writeShort(
-                            java.lang.Short.reverseBytes(1.toShort()).toInt()
-                        ) // AudioFormat, 1 for PCM
-                        randomAccessWriter!!.writeShort(
-                            java.lang.Short.reverseBytes(nChannels).toInt()
-                        ) // Number of channels, 1 for mono, 2 for stereo
-                        randomAccessWriter!!.writeInt(Integer.reverseBytes(sRate)) // Sample rate
-                        randomAccessWriter!!.writeInt(Integer.reverseBytes(sRate * bSamples * nChannels / 8)) // Byte rate, SampleRate*NumberOfChannels*BitsPerSample/8
-                        randomAccessWriter!!.writeShort(
-                            java.lang.Short.reverseBytes((nChannels * bSamples / 8).toShort())
-                                .toInt()
-                        ) // Block align, NumberOfChannels*BitsPerSample/8
-                        randomAccessWriter!!.writeShort(
-                            java.lang.Short.reverseBytes(bSamples).toInt()
-                        ) // Bits per sample
-                        randomAccessWriter!!.writeBytes("data")
-                        randomAccessWriter!!.writeInt(0) // Data chunk size not known yet, write 0
+//                        randomAccessWriter = RandomAccessFile(filePath, "rw")
+//                        randomAccessWriter!!.setLength(0) // Set file length to 0, to prevent unexpected behavior in case the file already existed
+//                        randomAccessWriter!!.writeBytes("RIFF")
+//                        randomAccessWriter!!.writeInt(0) // Final file size not known yet, write 0
+//                        randomAccessWriter!!.writeBytes("WAVE")
+//                        randomAccessWriter!!.writeBytes("fmt ")
+//                        randomAccessWriter!!.writeInt(Integer.reverseBytes(16)) // Sub-chunk size, 16 for PCM
+//                        randomAccessWriter!!.writeShort(
+//                            java.lang.Short.reverseBytes(1.toShort()).toInt()
+//                        ) // AudioFormat, 1 for PCM
+//                        randomAccessWriter!!.writeShort(
+//                            java.lang.Short.reverseBytes(nChannels).toInt()
+//                        ) // Number of channels, 1 for mono, 2 for stereo
+//                        randomAccessWriter!!.writeInt(Integer.reverseBytes(sRate)) // Sample rate
+//                        randomAccessWriter!!.writeInt(Integer.reverseBytes(sRate * bSamples * nChannels / 8)) // Byte rate, SampleRate*NumberOfChannels*BitsPerSample/8
+//                        randomAccessWriter!!.writeShort(
+//                            java.lang.Short.reverseBytes((nChannels * bSamples / 8).toShort())
+//                                .toInt()
+//                        ) // Block align, NumberOfChannels*BitsPerSample/8
+//                        randomAccessWriter!!.writeShort(
+//                            java.lang.Short.reverseBytes(bSamples).toInt()
+//                        ) // Bits per sample
+//                        randomAccessWriter!!.writeBytes("data")
+//                        randomAccessWriter!!.writeInt(0) // Data chunk size not known yet, write 0
                         buffer = ByteArray(framePeriod * bSamples / 8 * nChannels)
                         state = State.READY
                     } else {
@@ -421,8 +421,8 @@ constructor(
 
                 payloadSize = 0
                 audioRecorder!!.startRecording()
-                audioRecorder!!.read(buffer, 0, buffer.size)
-                recordingStateListener1!!.recordingStart(true)
+//                audioRecorder!!.read(buffer, 0, buffer.size)
+                     recordingStateListener1!!.recordingStart(true)
 
 
             } else {
