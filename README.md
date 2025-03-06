@@ -99,7 +99,7 @@ To integrate the SDK into your application, follow these steps:
 
    - ##### **Groovy:**
 
-       Add the `jitpack.io` repository to `settings.gradle` file:
+       Add the `jitpack.io` repository to the project level `build.gradle` file:
        ```groovy
        dependencyResolutionManagement {
                repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -112,12 +112,12 @@ To integrate the SDK into your application, follow these steps:
        and add the following to the app-level dependencies:
        ```groovy
        dependencies {
-             implementation 'com.github.reverieinc:rev-voice-input-android:1.0.3'
+             implementation 'com.github.reverieinc:rev-voice-input-android:v1.0.3'
        }
        ```
 
    - ##### **or Kotlin DSL:**
-       Add the `jitpack.io` repository to `settings.gradle` file:
+       Add the `jitpack.io` repository to the project level `build.gradle` file:
        ```groovy
        dependencyResolutionManagement {
            repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -130,7 +130,7 @@ To integrate the SDK into your application, follow these steps:
        and add the following to the app-level dependencies:
        ```groovy
        dependencies {
-             implementation ("com.github.reverieinc:rev-voice-input-android:1.0.3")
+             implementation ("com.github.reverieinc:rev-voice-input-android:v1.0.3")
        }
     
        ```
@@ -272,7 +272,7 @@ To integrate the SDK into your application, follow these steps:
    ```java 
    //Preparing the Constructor with a valid API key, APP-ID, language, domain, and Logging
    
-    RevVoiceInput voiceInput = = new RevVoiceInput(
+    RevVoiceInput voiceInput = new RevVoiceInput(
                 API_KEY,
                 APP_ID,
                 Domain.VOICE_SEARCH, Languages.ENGLISH, Logging.TRUE);
@@ -281,7 +281,7 @@ To integrate the SDK into your application, follow these steps:
     ```
    **Type II:**
      ```java
-        //Preparing the constructor with valid API key and APP-ID
+        //Preparing the constructor with a valid API key and APP-ID
         RevVoiceInput voiceInput = new RevVoiceInput(API_KEY, APP_ID,Logging.TRUE);
               
     ```
