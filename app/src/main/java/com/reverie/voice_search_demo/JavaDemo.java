@@ -45,11 +45,11 @@ public class JavaDemo extends AppCompatActivity {
         stopBtn = findViewById(R.id.stopBtn);
         outputTv = findViewById(R.id.outputTv);
         searchBtnWithoutUi = findViewById(R.id.searchBtnwithoutUi);
-        LOG.Companion.setDEBUG(true);// implement customlogger
+        LOG.Companion.setDEBUG(false);// implement customlogger
 
         voiceInput = new RevVoiceInput(
                 BuildConfig.API_KEY,
-                BuildConfig.APP_ID, Domain.INDUS_APP_SEARCH, Languages.ENGLISH, Logging.TRUE);
+                BuildConfig.APP_ID, Domain.INDUS_APP_SEARCH, Languages.ENGLISH, Logging.FALSE);
         voiceInput.setNoInputTimeout(5.0);
         voiceInput.setSilence(0.7);
         voiceInput.setTimeout(45.0);

@@ -32,13 +32,13 @@ There are two **startRecognitions()** methods in the **RevVoiceInput** class. Th
 
 #### Constructor 1
 
-| Parameter | Type   | Required | Default        | Description                     |
-|-----------|--------|----------|----------------|---------------------------------|
-| apiKey    | String | true     | -              | Api key given to the client     |
-| appId     | String | true     | -              | App Id given to the client      |
-| domain    | String | false    | ‘voice_search’ | Domain of the voice Input      |
-| Language  | String | false    | ‘en’           | Language of voice Input        |
-| Logging   | String | true     | -              | Logging of data required or not |
+| Parameter | Type   | Required | Default   | Description                     |
+|-----------|--------|----------|-----------|---------------------------------|
+| apiKey    | String | true     | -         | Api key given to the client     |
+| appId     | String | true     | -         | App Id given to the client      |
+| domain    | String | false    | ‘generic’ | Domain of the voice Input       |
+| Language  | String | false    | ‘en’      | Language of voice Input         |
+| Logging   | String | true     | -         | Logging of data required or not |
 
 #### Constructor 2
 
@@ -52,12 +52,12 @@ There are two **startRecognitions()** methods in the **RevVoiceInput** class. Th
 ### startRecognition()
 ##### Method 1
 
-| Element    | Type    | Required | Default        | Description                          |
-|------------|---------|----------|----------------|--------------------------------------|
-| Context    | context | true     | -              | Context of the activity              |
-| isUiNeeded | boolean | true     | -              | to use bundled UI element of the SDK |
-| Language   | String  | false    | ‘en’           | Language of Input                    |
-| Domain     | String  | false    | ‘voice_search’ | Domain of Input                      |
+| Element    | Type    | Required | Default   | Description                          |
+|------------|---------|----------|-----------|--------------------------------------|
+| Context    | context | true     | -         | Context of the activity              |
+| isUiNeeded | boolean | true     | -         | to use bundled UI element of the SDK |
+| Language   | String  | false    | ‘en’      | Language of Input                    |
+| Domain     | String  | false    | ‘generic’ | Domain of Input                      |
 
 
 #### Method 2
@@ -77,6 +77,7 @@ Various constant values are provided in SDK for DOMAIN, LANGUAGES, and LOGGING p
 1. `Domain.VOICE_SEARCH`
 2. `Domain.GENERIC`
 3. `Domain.BFSI`
+4. `Domain.INDUS_APP_SEARCH`
 
 #### Languages
 1.  `Languages.ENGLISH`
@@ -112,7 +113,7 @@ To integrate the SDK into your application, follow these steps:
        and add the following to the app-level dependencies:
        ```groovy
        dependencies {
-             implementation 'com.github.reverieinc:rev-voice-input-android:v1.0.4'
+             implementation 'com.github.reverieinc:rev-voice-input-android:v1.0.5'
        }
        ```
 
@@ -130,7 +131,7 @@ To integrate the SDK into your application, follow these steps:
        and add the following to the app-level dependencies:
        ```groovy
        dependencies {
-             implementation ("com.github.reverieinc:rev-voice-input-android:v1.0.4")
+             implementation ("com.github.reverieinc:rev-voice-input-android:v1.0.5")
        }
     
        ```
@@ -172,7 +173,7 @@ To integrate the SDK into your application, follow these steps:
     ```kotlin
     //Preparing the Constructor with  API-key, APP-ID, language, domain, and logging
         val  voiceInput=RevVoiceInput(API_KEY,APP_ID,
-        Domain.VOICE_SEARCH, 
+        Domain.GENERIC, 
         Languages.ENGLISH,
         Logging.TRUE)
     ```
@@ -215,7 +216,7 @@ To integrate the SDK into your application, follow these steps:
         voiceInput.startRecognition(
                     getApplicationContext(),
                     true
-                    ,Domain.VOICE_SEARCH,
+                    ,Domain.GENERIC,
                      Languages.ENGLISH
             )
     ```
@@ -275,7 +276,7 @@ To integrate the SDK into your application, follow these steps:
     RevVoiceInput voiceInput = new RevVoiceInput(
                 API_KEY,
                 APP_ID,
-                Domain.VOICE_SEARCH, Languages.ENGLISH, Logging.TRUE);
+                Domain.GENERIC, Languages.ENGLISH, Logging.TRUE);
 
    
     ```
@@ -326,7 +327,7 @@ To integrate the SDK into your application, follow these steps:
     voiceInput.startRecognition(
     getApplicationContext(),
     true
-    Domain.VOICE_SEARCH, 
+    Domain.GENERIC, 
     Languages.ENGLISH 
     )
     ```
