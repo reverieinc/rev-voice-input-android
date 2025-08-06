@@ -49,7 +49,7 @@ public class JavaDemo extends AppCompatActivity {
 
         voiceInput = new RevVoiceInput(
                 BuildConfig.API_KEY,
-                BuildConfig.APP_ID, Domain.VOICE_SEARCH, Languages.ENGLISH, Logging.TRUE);
+                BuildConfig.APP_ID, Domain.INDUS_APP_SEARCH, Languages.ENGLISH, Logging.TRUE);
         voiceInput.setNoInputTimeout(5.0);
         voiceInput.setSilence(0.7);
         voiceInput.setTimeout(45.0);

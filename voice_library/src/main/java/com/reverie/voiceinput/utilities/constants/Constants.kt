@@ -60,6 +60,7 @@ const val WARNING_NO_INTERNET = "No Internet Connection."
         const val GENERIC="generic"
         const val BFSI="bfsi"
         const val APP_SEARCH="app_search"
+        const val INDUS_APP_SEARCH="indusapp"
     }
 
 }

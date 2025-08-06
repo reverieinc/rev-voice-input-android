@@ -36,7 +36,7 @@ public class RevVoiceInput {
     private final String apiKey;
     private final String appId;
 
-    private String domain = Domain.VOICE_SEARCH;
+    private String domain = Domain.GENERIC;
     private String lang = Languages.ENGLISH;
 
     private String logging;
