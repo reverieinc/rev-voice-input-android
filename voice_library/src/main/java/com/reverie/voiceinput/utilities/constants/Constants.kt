@@ -28,6 +28,9 @@ const val NO_INPUT_TIMEOUT="noInputTimeout"
 const val SILENCE="silence"
 const val TIMEOUT="timeout"
 const val INTENT_LOGGING = "logging"
+
+const val INTENT_TOKEN = "token"
+const val INTENT_TOKEN_BASED = "token_based"
 //Warning messages
 const val WARNING_MISSING_MANIFEST =
     "Please ensure the following permissions are declared in the manifest:\n"

@@ -36,6 +36,10 @@ public class RevVoiceInput {
     private final String apiKey;
     private final String appId;
 
+
+    // For token-based auth
+    private final String token;
+    private final boolean tokenBased;
     private String domain = Domain.GENERIC;
     private String lang = Languages.ENGLISH;
 
@@ -64,6 +68,8 @@ public class RevVoiceInput {
         this.apiKey = apiKey;
         this.appId = appId;
         this.logging = logging;
+        this.token = null;
+        this.tokenBased = false;
     }
 
     /**
@@ -109,8 +115,42 @@ public class RevVoiceInput {
         this.domain = domain;
         this.lang = lang;
         this.logging = logging;
+        this.token = null;
+        this.tokenBased = false;
     }
 
+    /**
+     * Constructor for token-based auth with default domain/lang.
+     * Defaults:
+     *  - domain = Domain.GENERIC
+     *  - lang   = Languages.ENGLISH
+     *
+     * @param token   JWT token for STT streaming
+     * @param logging logging configuration
+     */
+    public RevVoiceInput(String token, String logging) {
+        this(token, Domain.GENERIC, Languages.ENGLISH, logging);
+    }
+    /**
+     * New constructor for token-based auth with explicit domain/lang.
+     *
+     * @param token   JWT token for STT streaming
+     * @param domain  pass the domain
+     * @param lang    language for voice_search
+     * @param logging logging configuration
+     */
+    public RevVoiceInput(String token, String domain, String lang, String logging) {
+        // token-based mode
+        this.token = token;
+        this.domain = domain;
+        this.lang = lang;
+        this.logging = logging;
+        this.tokenBased = true;
+
+        // no key-based auth in this instance
+        this.apiKey = null;
+        this.appId = null;
+    }
 
     /**
      * Method to initialise the callbacks of the voice search
@@ -177,28 +217,46 @@ public class RevVoiceInput {
      * without UI ,third parameter is domain , fourth parameter is the language
      */
     public void startRecognition(Context context, Boolean isUINeeded, String domain, String lang) {
-        if(RevVoiceInput.listener == null)
-        {
-            Log.e("StartRecognition", "startRecognition: listener should be set first" );
+        if (RevVoiceInput.listener == null) {
+            Log.e("StartRecognition", "startRecognition: listener should be set first");
             return;
         }
+
         isUiNeeded = isUINeeded;
         this.domain = domain;
         this.lang = lang;
+
         if (isUINeeded) {
-            context.startActivity(new Intent(context, RecordingActivity.class).
-                    putExtra(ConstantsKt.INTENT_API_KEY, apiKey).
-                    putExtra(ConstantsKt.INTENT_APP_ID, appId).
-                    putExtra(ConstantsKt.INTENT_DOMAIN, domain).
-                    putExtra(ConstantsKt.INTENT_LANG, lang).
-                    putExtra(ConstantsKt.SILENCE,silence).
-                    putExtra(ConstantsKt.TIMEOUT,timeout).
-                    putExtra(ConstantsKt.NO_INPUT_TIMEOUT,noInputTimeout).
-                    putExtra(ConstantsKt.TIMEOUT,timeout).
-                    putExtra(ConstantsKt.INTENT_LOGGING, logging).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            Intent intent = new Intent(context, RecordingActivity.class)
+                    .putExtra(ConstantsKt.INTENT_DOMAIN, domain)
+                    .putExtra(ConstantsKt.INTENT_LANG, lang)
+                    .putExtra(ConstantsKt.SILENCE, silence)
+                    .putExtra(ConstantsKt.TIMEOUT, timeout)
+                    .putExtra(ConstantsKt.NO_INPUT_TIMEOUT, noInputTimeout)
+                    .putExtra(ConstantsKt.INTENT_LOGGING, logging)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            if (tokenBased) {
+                intent.putExtra(ConstantsKt.INTENT_TOKEN, token);
+                intent.putExtra(ConstantsKt.INTENT_TOKEN_BASED, true);
+            } else {
+                intent.putExtra(ConstantsKt.INTENT_API_KEY, apiKey);
+                intent.putExtra(ConstantsKt.INTENT_APP_ID, appId);
+                intent.putExtra(ConstantsKt.INTENT_TOKEN_BASED, false);
+            }
+
+            context.startActivity(intent);
 
         } else {
-            recordingWithoutUi = new RecordingWithoutUi(context, apiKey, appId, domain, lang, logging,noInputTimeout,silence,timeout);
+            if (tokenBased) {
+                recordingWithoutUi =
+                        new RecordingWithoutUi(context, token, domain, lang, logging,
+                                noInputTimeout, silence, timeout, true);
+            } else {
+                recordingWithoutUi =
+                        new RecordingWithoutUi(context, apiKey, appId, domain, lang, logging,
+                                noInputTimeout, silence, timeout);
+            }
             recordingWithoutUi.startRecognitions();
         }
     }

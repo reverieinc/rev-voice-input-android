@@ -19,6 +19,7 @@ package com.reverie.voiceinput;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -57,6 +58,9 @@ public class RecordingActivity extends AppCompatActivity {
 
     boolean isMicPress = false;
 
+    private String token;
+    private boolean tokenBased = false;
+
     private String appId = "";
     private String apiKey = "";
     private String domain = "";
@@ -68,7 +72,7 @@ public class RecordingActivity extends AppCompatActivity {
     private double noInputTimeout = 2;
     private TextView listeningTextView;
     private double timeout = 15;
-
+    private static final String TAG = "RecordingActivity";
     @SuppressLint({"MissingInflatedId", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +80,20 @@ public class RecordingActivity extends AppCompatActivity {
         setContentView(
                 R.layout.activity_voice);
         Intent i = getIntent();
-        apiKey = i.getStringExtra(ConstantsKt.INTENT_API_KEY);
-        appId = i.getStringExtra(ConstantsKt.INTENT_APP_ID);
+//        apiKey = i.getStringExtra(ConstantsKt.INTENT_API_KEY);
+//        appId = i.getStringExtra(ConstantsKt.INTENT_APP_ID);
+
+        tokenBased = getIntent().getBooleanExtra(ConstantsKt.INTENT_TOKEN_BASED, false);
+
+        if (tokenBased) {
+            token = getIntent().getStringExtra(ConstantsKt.INTENT_TOKEN);
+            Log.d(TAG, "👉 Using TOKEN mode");
+        } else {
+            apiKey = getIntent().getStringExtra(ConstantsKt.INTENT_API_KEY);
+            appId = getIntent().getStringExtra(ConstantsKt.INTENT_APP_ID);
+            Log.d(TAG, "👉 Using API_KEY/APP_ID mode");
+        }
+
         lang = i.getStringExtra(ConstantsKt.INTENT_LANG);
         domain = i.getStringExtra(ConstantsKt.INTENT_DOMAIN);
         logging = i.getStringExtra(ConstantsKt.INTENT_LOGGING);
@@ -114,7 +130,10 @@ public class RecordingActivity extends AppCompatActivity {
             isCancel = true;
             slideDownCancel(relativeLayout);
         });
-        streamingSTT = new StreamingSTT(getApplicationContext(), apiKey, appId);
+//        streamingSTT = new StreamingSTT(getApplicationContext(), apiKey, appId);
+        if (tokenBased) streamingSTT = new StreamingSTT(getApplicationContext(), token);
+        else streamingSTT = new StreamingSTT(getApplicationContext(), apiKey, appId);
+
         streamingSTT.setSilence(silence);
         streamingSTT.setNoInputTimeout(noInputTimeout);
         streamingSTT.setTimeout(timeout);

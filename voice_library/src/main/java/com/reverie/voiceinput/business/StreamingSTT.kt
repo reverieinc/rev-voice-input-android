@@ -42,6 +42,15 @@ internal class StreamingSTT(
 ) :
     CustomAudioRecorder.RecordingStateListener {
 
+    // --- NEW: token-based auth state ---
+    private var token: String? = null
+    private var tokenBased: Boolean = false
+
+    // This secondary constructor is for token-based usage
+    constructor(context: Context?, token: String) : this(context, "", "") {
+        this.token = token
+        this.tokenBased = true
+    }
     private var mContext: Context? = context
     private var customAudioRecorder: CustomAudioRecorder
     lateinit var streamingSTTResultListener: StreamingSTTResultListener
@@ -201,13 +210,31 @@ internal class StreamingSTT(
                         customSocketListener!!.setNoInputTimeout(noInputTimeout)
 
                         //customSocketListener!!.startRequest(langCode, domain, apikey, app_id)
-                        customSocketListener!!.startRequest(
-                            langCode,
-                            domain,
-                            apikey,
-                            app_id,
-                            logging
-                        )
+//                        customSocketListener!!.startRequest(
+//                            langCode,
+//                            domain,
+//                            apikey,
+//                            app_id,
+//                            logging
+//                        )
+                        if (tokenBased && token != null) {
+                            //Token based
+                            customSocketListener!!.startRequestWithToken(
+                                langCode,
+                                domain,
+                                token!!,
+                                logging
+                            )
+                        } else {
+                            // Existing behaviour (apikey + app_id URL)
+                            customSocketListener!!.startRequest(
+                                langCode,
+                                domain,
+                                apikey,
+                                app_id,
+                                logging
+                            )
+                        }
                         customAudioRecorder.startRecordingProcess()
 
                         customLogger("TAG", "*********** Recording start ***********")

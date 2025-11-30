@@ -27,7 +27,6 @@ import okio.ByteString
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 
-
 internal class CustomSocketListener : WebSocketListener() {
     private var listener: InternalResultListener? = null
     private var eventCallback: EventCallback? = null
@@ -67,14 +66,13 @@ internal class CustomSocketListener : WebSocketListener() {
      * @param data the array byte data to be added
      */
     fun addData(data: ByteArray) {
-
         if (socket != null) {
             socket!!.send(ByteString.of(*data))
         }
     }
 
     /**
-     * For starting the connection
+     * For starting the connection (legacy apikey + appid)
      */
     fun startRequest(
         langCode: String,
@@ -83,19 +81,29 @@ internal class CustomSocketListener : WebSocketListener() {
         appid: String,
         logging: String
     ) {
-        customLogger(TAG, "Request started")
+        customLogger(TAG, "Request started (apikey/appid)")
         run(langCode, domain, apikey, appid, logging)
+    }
+
+    /**
+     * For starting the connection (token-based)
+     */
+    fun startRequestWithToken(
+        langCode: String,
+        domain: String,
+        token: String,
+        logging: String
+    ) {
+        customLogger(TAG, "Request started (token-based)")
+        runWithToken(langCode, domain, token, logging)
     }
 
     fun setNoInputTimeout(noInputTimeout: Double) {
         this.noInputTimeout = noInputTimeout
-
     }
 
     fun setSilence(silence: Double) {
-
         this.silence = silence
-
     }
 
     fun setTimeout(timeout: Double) {
@@ -106,19 +114,13 @@ internal class CustomSocketListener : WebSocketListener() {
      * Stop listening to audio, end the streaming cycle
      */
     fun endRequest() {
-
-//
-//        StreamingSTT.inProcess =false
         StreamingSTT.isEOF = true
         customLogger(TAG, "Ending request")
 
-//        if (socket != null) socket!!.send("--EOF--".encodeUtf8())
         val byteArray = "--EOF--".toByteArray(charset("UTF-8"))
         val byteString = ByteString.of(*byteArray)
 
         if (socket != null) socket!!.send(byteString)
-
-
     }
 
     fun cancelRequest() {
@@ -129,15 +131,15 @@ internal class CustomSocketListener : WebSocketListener() {
         }
     }
 
-
     private fun sendBackEvent(state: Int) {
         if (eventCallback != null) {
-//            Log.d(TAG, "sendBackEvent: "+state)
-
             handler.post { eventCallback!!.onEvent(state) }
         }
     }
 
+    /**
+     * Legacy appid + apikey URL
+     */
     private fun run(
         langCode: String,
         domain: String,
@@ -146,15 +148,62 @@ internal class CustomSocketListener : WebSocketListener() {
         logging: String
     ) {
         val client = OkHttpClient.Builder()
-            .readTimeout(10, TimeUnit.SECONDS).connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
             .build()
 
         var streamUrl =
-            "${REV_STT_STREAM_URL}apikey=$apikey&appid=$appid&appname=stt_stream&src_lang=$langCode&domain=$domain&logging=$logging&timeout=$timeout&silence=$silence&no_input_timeout=$noInputTimeout"
+            "${REV_STT_STREAM_URL}apikey=$apikey&appid=$appid" +
+                    "&appname=stt_stream&src_lang=$langCode" +
+                    "&domain=$domain&logging=$logging" +
+                    "&timeout=$timeout&silence=$silence&no_input_timeout=$noInputTimeout"
+
         if (LOG.DEBUG) {
             streamUrl += "debug=true"
         }
-        customLogger(TAG, "rev url= $streamUrl")
+
+        customLogger(TAG, "rev url (apikey/appid)= $streamUrl")
+        val request = Request.Builder()
+            .url(streamUrl)
+            .build()
+        client.newWebSocket(request, this)
+        client.dispatcher.executorService.shutdown()
+    }
+
+    /**
+     * Token-based URL with ;rev=1 and token query param
+     */
+    private fun runWithToken(
+        langCode: String,
+        domain: String,
+        token: String,
+        logging: String
+    ) {
+        val client = OkHttpClient.Builder()
+            .readTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .build()
+
+        // Inject ";rev=1" into the base URL
+        var baseUrl = REV_STT_STREAM_URL
+        baseUrl = if (baseUrl.contains("stream?")) {
+            baseUrl.replace("stream?", "stream;rev=1?")
+        } else {
+            baseUrl // fallback, in case constant already has ;rev=1
+        }
+
+        var streamUrl =
+            "${baseUrl}token=$token" +
+                    "&appname=stt_stream" + // keep appname consistent with existing usage
+                    "&src_lang=$langCode" +
+                    "&domain=$domain&logging=$logging" +
+                    "&timeout=$timeout&silence=$silence&no_input_timeout=$noInputTimeout"
+
+        if (LOG.DEBUG) {
+            streamUrl += "debug=true"
+        }
+
+        customLogger(TAG, "rev url (token)= $streamUrl")
         val request = Request.Builder()
             .url(streamUrl)
             .build()
@@ -168,14 +217,12 @@ internal class CustomSocketListener : WebSocketListener() {
         socket = webSocket
         handler.post {
             customLogger(TAG, "onOpen: ")
-            listener!!.onEvent(SOCKET_OPENED)
+            listener?.onEvent(SOCKET_OPENED)
             sendBackEvent(SOCKET_OPENED)
         }
-
     }
 
     private fun parseError(message: String, code: Int): VoiceInputErrorResponseData {
-        //StreamingSTT.inProcess =false
         return VoiceInputErrorResponseData(message, code)
     }
 
@@ -211,15 +258,12 @@ internal class CustomSocketListener : WebSocketListener() {
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         customLogger(TAG, "onFailure: ")
 
-
-        if (response != null && response!!.code != null && response!!.message != null) {
-
-            var sttErrorResponseData = t.message?.let { parseError(it, response!!.code) }
-            sttErrorResponseData?.let { listener!!.onError(it) }
+        if (response != null && response.code != null && response.message != null) {
+            val sttErrorResponseData = t.message?.let { parseError(it, response.code) }
+            sttErrorResponseData?.let { listener?.onError(it) }
         } else {
-            t.message?.let { parseError(it, 0) }?.let { listener!!.onError(it) }
+            t.message?.let { parseError(it, 0) }?.let { listener?.onError(it) }
         }
-//       StreamingSTT.inProcess =false
     }
 
     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
