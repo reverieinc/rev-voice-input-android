@@ -84,19 +84,19 @@ These constructors use a token issued by Reverie’s backend instead of `apiKey`
 
 ##### Constructor 3 (full control – token):
 
-    | Parameter | Type   | Required | Default   | Description                        |
-    |----------:|--------|----------|-----------|------------------------------------|
-    | token     | String | true     | -         | Token for STT streaming |
-    | domain    | String | false    | `generic` | Domain of the voice input          |
-    | language  | String | false    | `en`      | Language of voice input            |
-    | logging   | String | true     | -         | Logging mode for the session       |
+| Parameter | Type   | Required | Default   | Description                        |
+|-----------|--------|----------|-----------|------------------------------------|
+| token     | String | true     | -         | Token for STT streaming |
+| domain    | String | false    | `generic` | Domain of the voice input          |
+| language  | String | false    | `en`      | Language of voice input            |
+| logging   | String | true     | -         | Logging mode for the session       |
 
 ##### Constructor 4 (minimal – token):
 
-    | Parameter | Type   | Required | Default   | Description                        |
-    |----------:|--------|----------|-----------|------------------------------------|
-    | token     | String | true     | -         | Token for STT streaming |
-    | logging   | String | true     | -         | Logging mode for the session       |
+| Parameter | Type   | Required | Default   | Description                        |
+|-----------|--------|----------|-----------|------------------------------------|
+| token     | String | true     | -         | Token for STT streaming |
+| logging   | String | true     | -         | Logging mode for the session       |
 
 ### startRecognition()
 ##### Method 1
@@ -416,7 +416,7 @@ To integrate the SDK into your application, follow these steps:
         });
     ```  
 
-4. Starting the search Process.
+4. Starting the Input process:
 
    **Type I:**
       ```java
