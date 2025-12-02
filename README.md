@@ -164,7 +164,7 @@ To integrate the SDK into your application, follow these steps:
        and add the following to the app-level dependencies:
        ```groovy
        dependencies {
-             implementation 'com.github.reverieinc:rev-voice-input-android:v1.0.5'
+	        implementation 'com.github.reverieinc:rev-voice-input-android:v2.0_02122025'
        }
        ```
 
@@ -182,7 +182,7 @@ To integrate the SDK into your application, follow these steps:
        and add the following to the app-level dependencies:
        ```groovy
        dependencies {
-             implementation ("com.github.reverieinc:rev-voice-input-android:v1.0.5")
+             implementation ("com.github.reverieinc:rev-voice-input-android:v2.0_02122025")
        }
     
        ```
